@@ -1,17 +1,64 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      {{showLocal()}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="center-content" scroll-y="false">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-title size="large">{{showLocal()}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <app-explore-container name="Tab 3 page"></app-explore-container>
+
+  <!-- Usuario no registrado -->
+  <div id="user-creation-form" *ngIf="!isRegistered()">
+  <div class="welcome-text">
+    <h1>Bienvenido</h1>
+    <p>Por favor, crea una cuenta para comenzar</p>
+  </div>
+  <form (ngSubmit)="createUser()">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" id="email" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" expand="block">Confirmar</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="register-message">¿Olvidaste tu contraseña? <a href="/resetpassword">Ingresa aqui</a></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </form>
+  </div>
+
+  <!-- Usuario registrado -->
+  <div id="user-profile" *ngIf="isRegistered()">
+    <h1>User logged in</h1>
+    <p>Email: {{showUserLoggedIn()}}</p>
+    <ion-button (click)="logOut()" expand="block">Cerrar sesión</ion-button>
+
+  </div>
+
 </ion-content>
