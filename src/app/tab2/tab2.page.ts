@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -14,7 +13,7 @@ export class Tab2Page {
   private intervalId: any;
 
 
-  constructor() {}
+  constructor(private barcodeScanner: BarcodeScanner) {}
 
 
 
@@ -23,6 +22,7 @@ export class Tab2Page {
       token: localStorage.getItem('token') ?? 0,
       email: this.getCurrentUser(),
       image: localStorage.getItem('image') ?? '',
+      scannedUrl: localStorage.getItem('scannedUrl') ?? ''
   }
 
   ngOnInit() {
@@ -178,6 +178,35 @@ export class Tab2Page {
 
   getUrl():string {
     return 'https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token;
+  }
+
+  scanCode() {
+    localStorage.removeItem('scannedUrl')
+    this.barcodeScanner.scan().then(barcodeData => {
+      localStorage.setItem('scannedUrl', barcodeData.text);
+      this.scanCodeAction().then(r => console.log(r));
+      console.log('Barcode data', barcodeData);
+    }).catch(err => {
+      localStorage.setItem('scannedUrl', 'error');
+      return 'Error';
+    });
+  }
+
+  getScannedUrl():string {
+    return localStorage.getItem('scannedUrl') ?? 'null';
+  }
+
+  async scanCodeAction(){
+    let post_url = this.qrInfo.scannedUrl +'&email='+this.qrInfo.email;
+    let response = await fetch(post_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    let json = await response.json();
+    console.log(json);
   }
 
 }

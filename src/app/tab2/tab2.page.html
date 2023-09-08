@@ -114,8 +114,13 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-button expand="block">Abrir camara</ion-button>
+              <ion-button expand="block" (click)="scanCode()">Abrir camara</ion-button>
 
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h2 >{{getScannedUrl()}}</h2>
             </ion-col>
           </ion-row>
         </ion-grid>
