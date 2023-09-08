@@ -11,7 +11,6 @@ export class Tab2Page {
   userAgent: string = this.getUserAgent();
   device: string = this.mobileOrDesktop();
   dataList: any[] = [];
-  dataListLength: number = this.dataList.length;
   private intervalId: any;
 
 
@@ -47,9 +46,6 @@ export class Tab2Page {
     generatedDesktop: false,
     generatedMobile: false,
   }
-
-
-  //api_url:string =  'https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token;
 
   async fetchData(): Promise<any[]> {
     console.log('https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token);
