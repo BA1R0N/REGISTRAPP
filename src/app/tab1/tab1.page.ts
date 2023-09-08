@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
+  userAgent: string = this.getUserAgent();
   constructor() {}
 
   readUserName():string {
@@ -32,5 +32,12 @@ export class Tab1Page {
     }
   }
 
+  isMobile(): boolean {
+    return this.userAgent.indexOf('Mobile') > -1;
+  }
+
+  getUserAgent(): string {
+    return navigator.userAgent;
+  }
 
 }

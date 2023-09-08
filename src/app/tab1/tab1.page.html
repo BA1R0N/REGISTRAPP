@@ -20,7 +20,14 @@
     <!-- Usuario logeado -->
   <div *ngIf="loggedIn()">
     <h1>Bienvenido, {{readUserName()}}</h1>
-    <h3>Generar QR <a href="/tabs/tab2">aqui</a></h3>
+
+    <div *ngIf="isMobile()">
+      <h3>Escanear QR <a href="/tabs/tab2">aqui</a></h3>
+    </div>
+
+    <div *ngIf="!isMobile()">
+      <h3>Generar QR <a href="/tabs/tab2">aqui</a></h3>
+    </div>
   </div>
 
     <!-- Usuario no registrado -->
