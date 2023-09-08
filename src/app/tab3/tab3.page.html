@@ -55,9 +55,26 @@
 
   <!-- Usuario registrado -->
   <div id="user-profile" *ngIf="isRegistered()">
-    <h1>User logged in</h1>
-    <p>Email: {{showUserLoggedIn()}}</p>
-    <ion-button (click)="logOut()" expand="block">Cerrar sesión</ion-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <h1>Perfil del usuario registrado</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <h5>Email: {{ showUserLoggedIn() }}</h5>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button (click)="logOut()" expand="full">Cerrar sesión</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button  expand="full">Cambiar contraseña</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
   </div>
 
