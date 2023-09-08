@@ -85,3 +85,35 @@
 }
 
 
+.custom-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid #000000
+}
+
+/*
+.data-table th {
+  background-color: #f2f2f2;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+*/
+
+.bottom-space {
+  margin-bottom: 90px;
+}

@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 
+
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -8,7 +10,37 @@ import {Component} from '@angular/core';
 export class Tab2Page {
   userAgent: string = this.getUserAgent();
   device: string = this.mobileOrDesktop();
+  dataList: any[] = [];
+  dataListLength: number = this.dataList.length;
+  private intervalId: any;
+
+
   constructor() {}
+
+
+
+  qrInfo = {
+      classname : 'matematicas',
+      token: localStorage.getItem('token') ?? 0,
+      email: this.getCurrentUser(),
+      image: localStorage.getItem('image') ?? '',
+  }
+
+  ngOnInit() {
+    if (this.qrInfo.token == '0') {
+      console.log('token es 0');
+    } else {
+      this.intervalId = setInterval(() => {
+          this.fetchData().then((data) => {
+              this.dataList = data;
+          });
+      }, 2500);
+    }
+  }
+
+  ngOnDestroy() {
+      clearInterval(this.intervalId);
+  }
 
   debugInfo = {
     show: false,
@@ -16,10 +48,14 @@ export class Tab2Page {
     generatedMobile: false,
   }
 
-  qrInfo = {
-    classname : 'math',
-    email: this.getCurrentUser(),
-    image: localStorage.getItem('image') ?? '',
+
+  //api_url:string =  'https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token;
+
+  async fetchData(): Promise<any[]> {
+    console.log('https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token);
+      const response = await fetch('https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token);
+      let foo = await response.json();
+      return foo.students;
   }
 
   getUserAgent(): string {
@@ -66,7 +102,8 @@ export class Tab2Page {
   }
 
   async generateQR() {
-    // set debug.desktopGenerated to 'true'
+
+    this.ngOnInit()
     localStorage.setItem('generatedDesktop', 'true');
 
     let email = this.getCurrentUser();
@@ -82,13 +119,18 @@ export class Tab2Page {
 
     localStorage.setItem('image', 'true');
 
-    let xd = this.qrInfo.image = json.image;
-    console.log(xd);
-    localStorage.setItem('image', xd);
+    let image = this.qrInfo.image = json.image;
+    let token = this.qrInfo.token = json.token;
 
+    console.log(image);
+    console.log(token);
 
+    localStorage.setItem('image', image);
+    localStorage.removeItem('token');
+    localStorage.setItem('token', token);
 
   }
+
 
   loggedIn():boolean {
     let local_user = localStorage.getItem('user');
@@ -122,15 +164,24 @@ export class Tab2Page {
       console.log('else');
       return false;
     }
-
   }
 
   deleteCacheDesktop() {
+    this.dataList = [];
+    this.ngOnDestroy();
     localStorage.removeItem('generatedDesktop');
   }
 
   generatedPageMobile() {
     return false
+  }
+
+  getListLength():number {
+    return this.dataList.length;
+  }
+
+  getUrl():string {
+    return 'https://api.registrapp.sebas.lat/a?token='+ this.qrInfo.token;
   }
 
 }

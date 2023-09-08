@@ -65,20 +65,43 @@
       </div>
       <!-- Fin - Pagina generada pc -->
 
+      <!-- Pagina del qr generado -->
       <div *ngIf="!generatedPageDesktop()">
         <div class="qr-page">
           <h1>QR generado para la clase: {{qrInfo.classname}}</h1>
           <ion-button (click)="deleteCacheDesktop()">Reiniciar</ion-button>
+            <div class="custom-center">
+              <a target="_blank" href="{{qrInfo.image}}">
+                <img ngSrc="{{qrInfo.image}}" alt="Codigo QR" width="360" height="360">
+              </a>
+            </div>
+          <!-- Listado -->
+            <div>
+              <!-- Mensaje - lista vacia -->
+              <div *ngIf="getListLength() == 0">
+                <h2>Esperando a que se registren los estudiantes...</h2>
+              </div>
 
-          <div class="img-container">
-            <a target="_blank" href="{{qrInfo.image}}">
-            <img class="qr-image" ngSrc="{{qrInfo.image}}" alt="Codigo QR" fill="QR">
-            </a>
-          </div>
+              <div class="data-table" *ngIf="getListLength() !== 0">
+                <table>
+                  <tr>
+                    <th>Estudiantes:   <ion-badge color="primary">{{getListLength()}}</ion-badge></th>
+                  </tr>
+                  <tr *ngFor="let student of dataList">
+                    <td>{{ student }}</td>
+                  </tr>
+                </table>
 
+              </div>
+              <div>
+                <p>ID de la clase: <a target="_blank" href="{{getUrl()}}">{{this.qrInfo.token}}</a></p>
+              </div>
+              <div class="bottom-space">
+              </div>
+
+            </div>
         </div>
       </div>
-
 
 
     <!-- Inicio - Pagina generada movil -->
