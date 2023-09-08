@@ -26,4 +26,9 @@ export class TabsPage {
     }
   }
 
+  isMobile() {
+    let userAgentString = navigator.userAgent;
+    return userAgentString.indexOf('Mobile') !== -1;
+  }
+
 }
