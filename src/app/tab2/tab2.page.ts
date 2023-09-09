@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import {BarcodeScanner} from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -11,10 +11,13 @@ export class Tab2Page {
   device: string = this.mobileOrDesktop();
   dataList: any[] = [];
   private intervalId: any;
+  scannedToken: string = '';
+  afterScanPage: boolean = false;
+  registeredClass: string = '';
+  teacher: string = '';
 
 
   constructor(private barcodeScanner: BarcodeScanner) {}
-
 
 
   qrInfo = {
@@ -39,12 +42,6 @@ export class Tab2Page {
 
   ngOnDestroy() {
       clearInterval(this.intervalId);
-  }
-
-  debugInfo = {
-    show: false,
-    generatedDesktop: false,
-    generatedMobile: false,
   }
 
   async fetchData(): Promise<any[]> {
@@ -99,7 +96,6 @@ export class Tab2Page {
 
   async generateQR() {
 
-    this.ngOnInit()
     localStorage.setItem('generatedDesktop', 'true');
 
     let email = this.getCurrentUser();
@@ -125,6 +121,7 @@ export class Tab2Page {
     localStorage.removeItem('token');
     localStorage.setItem('token', token);
 
+    this.ngOnInit();
   }
 
 
@@ -169,7 +166,7 @@ export class Tab2Page {
   }
 
   generatedPageMobile() {
-    return false
+    return this.afterScanPage;
   }
 
   getListLength():number {
@@ -183,21 +180,23 @@ export class Tab2Page {
   scanCode() {
     localStorage.removeItem('scannedUrl')
     this.barcodeScanner.scan().then(barcodeData => {
-      localStorage.setItem('scannedUrl', barcodeData.text);
+      let scannedToken:string = barcodeData.text.split('?token=') [1];
+      this.scannedToken = scannedToken;
+      this.afterScanPage = true;
+      localStorage.setItem('scannedUrl', scannedToken);
       this.scanCodeAction().then(r => console.log(r));
       console.log('Barcode data', barcodeData);
     }).catch(err => {
+      console.log('Error', err);
       localStorage.setItem('scannedUrl', 'error');
       return 'Error';
     });
   }
 
-  getScannedUrl():string {
-    return localStorage.getItem('scannedUrl') ?? 'null';
-  }
 
   async scanCodeAction(){
-    let post_url = this.qrInfo.scannedUrl +'&email='+this.qrInfo.email;
+    let post_url = 'https://api.registrapp.sebas.lat/a?token=' + this.scannedToken +'&email='+this.qrInfo.email;
+
     let response = await fetch(post_url, {
       method: 'POST',
       headers: {
@@ -206,6 +205,8 @@ export class Tab2Page {
     });
 
     let json = await response.json();
+    this.registeredClass = json.classname;
+    this.teacher = json.teacher;
     console.log(json);
   }
 
