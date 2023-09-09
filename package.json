@@ -1,8 +1,8 @@
 {
   "name": "registrapp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "sbgallardo",
+  "homepage": "https://registrapp.sebas.lat",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -16,7 +16,7 @@
     "@angular/animations": "^16.0.0",
     "@angular/common": "^16.0.0",
     "@angular/compiler": "^16.0.0",
-    "@angular/core": "^16.0.0",
+    "@angular/core": "^16.2.4",
     "@angular/forms": "^16.0.0",
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
@@ -28,10 +28,10 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic-native/barcode-scanner": "^5.36.0",
-    "@ionic/angular": "^7.0.0",
+    "@ionic/angular": "^5.9.4",
     "ionicons": "^7.0.0",
     "phonegap-plugin-barcodescanner": "^8.1.0",
-    "rxjs": "~6.6.7",
+    "rxjs": "^6.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
@@ -67,5 +67,5 @@
     "ts-node": "^8.3.0",
     "typescript": "~5.0.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project - RegistrAPP"
 }
