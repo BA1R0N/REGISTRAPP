@@ -110,17 +110,11 @@
     <!-- Escanear QR plataforma Movil -->
     <div *ngIf="!desktopBool()">
       <div class="mobile-div">
-        <h1>Escanear QR</h1>
+        <h1>Registrar asistencia</h1>
         <ion-grid>
           <ion-row>
             <ion-col>
               <ion-button expand="block" (click)="scanCode()">Abrir camara</ion-button>
-
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h2 >{{getScannedUrl()}}</h2>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -131,7 +125,26 @@
       <!-- Fin - Pagina generada movil -->
 
       <div *ngIf="generatedPageMobile()">
-
+        <div class="mobile-div">
+          <h1>Se registro tu asistencia</h1>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <h2>Clase: {{registeredClass}}</h2>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <h3>Profesor: {{teacher}}</h3>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button (click)="this.afterScanPage = false">Cerrar</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
 
       </div>
 
