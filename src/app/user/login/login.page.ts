@@ -22,7 +22,14 @@ export class LoginPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private router: Router
-  ) { }
+  ) {
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        console.log('GOT USER ON LOGIN');
+        this.router.navigateByUrl('/', { replaceUrl: true });
+      }
+    });
+  }
 
   get email() { return this.credentials.get('email') }
 
@@ -32,7 +39,107 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    const loading = await this.loadingController.create();
+    await loading.present();
 
+    this.authService.signIn(this.credentials.getRawValue()).then(
+      async (data) => {
+        await loading.dismiss();
+        if (data.error) {
+          this.showAlert('Error de login', data.error.message)
+        }
+      }
+    )
   }
 
+  async getMagicLink() {
+    const alert = await this.alertController.create({
+      header: 'Iniciar sesion sin contraseña',
+      message: 'Ingresa tu correo electronico para recibir un link de acceso',
+      inputs: [
+        {
+          type: 'email',
+          name: 'email',
+          value: '',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Enviar',
+          handler: async (result) => {
+            const loading = await this.loadingController.create();
+            await loading.present();
+            const { data, error } = await this.authService.signInWithEmail(result.email);
+            await loading.dismiss();
+            console.log('after signup: ', data);
+            console.log('after signup error: ', error);
+
+            if (error) {
+              this.showAlert('Failed', error.message);
+            } else {
+              this.showAlert('Success', 'Please check your emails for further instructions!');
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+
+  async showAlert(title: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: msg,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  async forgotPassword() {
+    const alert = await this.alertController.create({
+      header: 'Receive a new password',
+      message: 'Please insert your email',
+      inputs: [
+        {
+          type: 'email',
+          name: 'email',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Reset password',
+          handler: async (result) => {
+            const loading = await this.loadingController.create();
+            await loading.present();
+            const { data, error } = await this.authService.sendPasswordResetEmail(result.email);
+            await loading.dismiss();
+
+            if (error) {
+              this.showAlert('Failed', error.message);
+            } else {
+              this.showAlert('Success', 'Please check your emails for further instructions!');
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+
+
+
+
+
+
 }
+

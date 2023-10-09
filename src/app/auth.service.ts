@@ -3,13 +3,15 @@ import { createClient, SupabaseClient, User } from '@supabase/supabase-js'
 import { environment } from '../environments/environment';
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
+import {isPlatform} from "@ionic/angular";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private supabase: SupabaseClient;
-  private currentUser: BehaviorSubject<User | boolean> = new BehaviorSubject<User | boolean>(false);
+  // @ts-ignore
+  private currentUser: BehaviorSubject<User | boolean> = new BehaviorSubject(null);
 
   constructor(private router: Router) {
     this.supabase = createClient(
@@ -17,14 +19,35 @@ export class AuthService {
       environment.supabaseKey
     );
 
-    this.supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-        console.log('SIGNED_IN')
-      } else {
-        this.currentUser.next(false)
-      }
+    this.supabase.auth.onAuthStateChange((event, sess) => {
+        console.log('SUPABAS AUTH CHANGED: ', event);
+        console.log('SUPABAS AUTH CHANGED sess: ', sess);
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          console.log('SET USER');
+
+          // @ts-ignore
+          this.currentUser.next(sess.user);
+        } else {
+          this.currentUser.next(false);
+        }
     }
     )
+    this.loadUser();
+  }
+
+  async loadUser() {
+    if (this.currentUser.value) {
+      console.log('ALREADY GOT USER');
+      return;
+    }
+    const user = await this.supabase.auth.getUser();
+    console.log('🚀 ~ file: auth.service.ts ~ line 33 ~ AuthService ~ loadUser ~ session', user);
+
+    if (user.data.user) {
+      this.currentUser.next(user.data.user);
+    } else {
+      this.currentUser.next(false);
+    }
   }
 
 
@@ -34,6 +57,13 @@ export class AuthService {
 
   signIn(credentials: { email: string, password: string }) {
     return this.supabase.auth.signInWithPassword(credentials)
+  }
+
+  signInWithEmail(email: string) {
+    const redirectTo = isPlatform('capacitor') ? 'login' : `${window.location.origin}/tabs/tab3`;
+    console.log('set redirect: ', redirectTo);
+
+    return this.supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
   }
 
   async signOut() {
@@ -48,5 +78,18 @@ export class AuthService {
   getCurrentUser(): Observable<User | boolean> {
     return this.currentUser.asObservable()
   }
+
+  getCurrentUserId(): string {
+    if (this.currentUser.value) {
+      return (this.currentUser.value as User).id;
+    } else {
+      return '?';
+    }
+  }
+
+  async setSession(access_token: any, refresh_token: any) {
+    return this.supabase.auth.setSession({ access_token, refresh_token });
+  }
+
 
 }
