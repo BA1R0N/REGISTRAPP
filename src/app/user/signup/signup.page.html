@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear una cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scrollY="false">
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="createAccount()" [formGroup]="credentials">
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            type="email"
+            inputmode="email"
+            placeholder="usuario@email.com"
+            formControlName="email"
+          ></ion-input>
+          <ion-note
+            slot="error"
+            *ngIf="(email.dirty || email.touched) && email.errors"
+          >Ingresa un email valido.</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input
+            type="password"
+            placeholder="**********"
+            formControlName="password"
+          ></ion-input>
+          <ion-note
+            slot="error"
+            *ngIf="(password.dirty || password.touched) && password.errors?.['required']"
+          >Ingresa una contraseña</ion-note>
+          <ion-note
+            slot="error"
+            *ngIf="(password.dirty || password.touched) && password.errors?.['minlength']"
+          >Minimo 6 caracteres</ion-note>
+        </ion-item>
+        <ion-button
+          type="submit"
+          expand="block"
+          strong="true" [disabled]="!credentials.valid"
+        >Crear cuenta</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

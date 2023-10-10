@@ -61,7 +61,9 @@ export class Tab3Page {
   }
 
   // TODO: crear función para resetear contraseña
-  resetPassword() {
+  changePassword() {
+
+
 
   }
 

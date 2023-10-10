@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="login()" [formGroup]="credentials">
+
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            type="email"
+            inputmode="email"
+            formControlName="email"
+            placeholder="usuario@email.com"
+          ></ion-input>
+          <ion-item
+            slot="error"
+            *ngIf="(email?.dirty || email?.touched) && email?.errors"
+          >Este campo no puede estar vacio</ion-item>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input
+            type="password"
+            inputmode="text"
+            formControlName="password"
+            placeholder="**********"
+          ></ion-input>
+          <ion-item
+            slot="error"
+            *ngIf="(password?.dirty || password?.touched) && password?.errors"
+          >Este campo no puede estar vacio</ion-item>
+        </ion-item>
+
+        <ion-button
+          type="submit"
+          expand="block"
+          strong="true"
+          [disabled]="credentials.invalid"
+        >Iniciar Sesión</ion-button>
+
+        <div class="ion-margin-top">
+
+          <ion-button
+            type="button"
+            expand="block"
+            color="tertiary"
+            (click)="getMagicLink()"
+          >
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            Iniciar sesión sin contraseña
+          </ion-button>
+
+          <ion-button
+            type="button"
+            expand="block"
+            color="warning"
+            fill="outline"
+            (click)="forgotPassword()"
+          >
+            <ion-icon name="construct-outline" slot="start"></ion-icon>
+            Recuperar contraseña
+          </ion-button>
+
+          <ion-button
+            type="button"
+            expand="block"
+            color="primary"
+            fill="outline"
+            routerLink="/signup"
+            >
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            Registrarse
+          </ion-button>
+
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
