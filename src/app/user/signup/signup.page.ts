@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
