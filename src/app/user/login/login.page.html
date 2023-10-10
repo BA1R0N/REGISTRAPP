@@ -1,6 +1,9 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>Iniciar Sesión</ion-title>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +18,7 @@
             type="email"
             inputmode="email"
             formControlName="email"
-            placeholder="user@example.com"
+            placeholder="usuario@email.com"
           ></ion-input>
           <ion-item
             slot="error"
@@ -29,7 +32,7 @@
             type="password"
             inputmode="text"
             formControlName="password"
-            placeholder="*********"
+            placeholder="**********"
           ></ion-input>
           <ion-item
             slot="error"
