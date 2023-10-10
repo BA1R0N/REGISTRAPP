@@ -81,7 +81,7 @@ export class LoginPage implements OnInit {
             if (error) {
               this.showAlert('Failed', error.message);
             } else {
-              this.showAlert('Success', 'Please check your emails for further instructions!');
+              this.showAlert('Correcto', 'Se envio el enlace.');
             }
           },
         },
@@ -102,8 +102,8 @@ export class LoginPage implements OnInit {
 
   async forgotPassword() {
     const alert = await this.alertController.create({
-      header: 'Receive a new password',
-      message: 'Please insert your email',
+      header: 'Recupera tu contraseña',
+      message: 'Ingresa tu email',
       inputs: [
         {
           type: 'email',
@@ -112,11 +112,11 @@ export class LoginPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
         },
         {
-          text: 'Reset password',
+          text: 'Reiniciar contraseña',
           handler: async (result) => {
             const loading = await this.loadingController.create();
             await loading.present();
