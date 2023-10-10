@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js'
-import { environment } from '../environments/environment';
+import { environment } from '../../../environments/environment';
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
 import {isPlatform} from "@ionic/angular";
@@ -41,7 +41,7 @@ export class AuthService {
       return;
     }
     const user = await this.supabase.auth.getUser();
-    console.log('🚀 ~ file: auth.service.ts ~ line 33 ~ AuthService ~ loadUser ~ session', user);
+    console.log('USER:', user);
 
     if (user.data.user) {
       this.currentUser.next(user.data.user);
