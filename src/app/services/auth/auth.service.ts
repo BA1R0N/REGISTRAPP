@@ -37,7 +37,7 @@ export class AuthService {
 
   async loadUser() {
     if (this.currentUser.value) {
-      console.log('ALREADY GOT USER');
+      console.log('ALREADY GOT USER:', this.currentUser.value);
       return;
     }
     const user = await this.supabase.auth.getUser();
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   signInWithEmail(email: string) {
-    const redirectTo = isPlatform('capacitor') ? 'login' : `${window.location.origin}/tabs/tab3`;
+    const redirectTo = isPlatform('capacitor') ? 'login' : `${window.location.origin}/tabs/profile`;
     console.log('set redirect: ', redirectTo);
 
     return this.supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
@@ -92,4 +92,7 @@ export class AuthService {
   }
 
 
+
+
 }
+

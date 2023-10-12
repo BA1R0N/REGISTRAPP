@@ -2,10 +2,10 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import { ActivitiesPage } from './activities.page';
+import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
-import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { Tab2PageRoutingModule } from './activities-routing.module';
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     Tab2PageRoutingModule,
     NgOptimizedImage
   ],
-    declarations: [Tab2Page]
+    declarations: [ActivitiesPage]
 })
 export class Tab2PageModule {}
