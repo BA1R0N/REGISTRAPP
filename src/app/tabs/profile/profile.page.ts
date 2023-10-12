@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,64 +8,32 @@ import { Component } from '@angular/core';
 })
 export class ProfilePage {
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+  ) {
 
-  user = {
-    email: '',
-    password: '',
   }
 
-  createUser() {
-    localStorage.setItem('user', JSON.stringify(this.user));
-    console.log("User created: ", this.user);
-  }
+  isLoggedIn():boolean {
 
-  isRegistered() {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return false;
+    const user_id:string = this.authService.getCurrentUserId();
+
+    if (user_id === '?') {
+      console.log('user is dead: ',user_id)
+
+      const fuck:boolean = false;
+      console.log('for real: ',fuck)
+
+      return fuck;
+
     } else {
-      let user = JSON.parse(not_null_user);
-      return !(user.email == '' && user.password == '');
+      console.log('user is fucked: ', user_id)
+      return true;
     }
   }
 
-  showLocal():string {
-    let local_user = localStorage.getItem('user');
-
-    let not_null_user:string = local_user ?? "empty";
-
-    if (not_null_user == "empty") {
-      return 'Crear una cuenta'
-    } else {
-      let user = JSON.parse(not_null_user);
-      let name = user.email.split('@')[0]
-      return 'Perfil de '+ name.charAt(0).toUpperCase() + name.slice(1)
-    }
-  }
-
-  showUserLoggedIn():string {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return 'null'
-    } else {
-      let user = JSON.parse(not_null_user);
-      return user.email
-    }
-  }
-
-  logOut() {
-    localStorage.removeItem('user');
-    console.log("User logged out!");
-  }
-
-  // TODO: crear función para resetear contraseña
-  changePassword() {
-
-
-
+  async signOut() {
+    await this.authService.signOut()
   }
 
 }
