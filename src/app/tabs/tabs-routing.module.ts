@@ -36,6 +36,17 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   },
+  {
+    path: 'qr',
+    redirectTo: '/tabs/activities/qr',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tabs/qr',
+    redirectTo: '/tabs/activities/qr',
+    pathMatch: 'full'
+  },
+
 
 ];
 
