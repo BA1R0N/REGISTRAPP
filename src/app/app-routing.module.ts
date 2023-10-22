@@ -20,13 +20,21 @@ const routes: Routes = [
     loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
+    path: 'download',
+    loadChildren: () => import('./download/download.module').then( m => m.DownloadPageModule)
+  },
+  {
+    path: 'descargar',
+    redirectTo: '/download',
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },
   {
     path: '**',
     redirectTo: '/404'
-  }
+  },
 ];
 @NgModule({
   imports: [

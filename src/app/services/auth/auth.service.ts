@@ -91,6 +91,10 @@ export class AuthService {
     return this.supabase.auth.setSession({ access_token, refresh_token });
   }
 
+  isAuthenticated(): boolean {
+      const user_id:string = this.getCurrentUserId();
+      return user_id !== '?';
+  }
 
 
 

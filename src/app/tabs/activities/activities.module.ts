@@ -6,6 +6,8 @@ import { ActivitiesPage } from './activities.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { Tab2PageRoutingModule } from './activities-routing.module';
+import {ListActivitiesComponent} from "../../components/list-activities/list-activities.component";
+import {Tab1PageModule} from "../home/home.module";
 
 @NgModule({
   imports: [
@@ -14,8 +16,9 @@ import { Tab2PageRoutingModule } from './activities-routing.module';
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    Tab1PageModule
   ],
-    declarations: [ActivitiesPage]
+    declarations: [ActivitiesPage, ListActivitiesComponent]
 })
 export class Tab2PageModule {}

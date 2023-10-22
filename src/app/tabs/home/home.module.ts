@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
+import { AccountCardComponent } from '../../components/account-card/account-card.component';
 
 import { Tab1PageRoutingModule } from './home-routing.module';
 
@@ -13,8 +14,12 @@ import { Tab1PageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+
   ],
-  declarations: [HomePage]
+  exports: [
+    AccountCardComponent
+  ],
+  declarations: [HomePage, AccountCardComponent]
 })
 export class Tab1PageModule {}

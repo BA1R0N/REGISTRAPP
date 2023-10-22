@@ -1,0 +1,27 @@
+ion-content {
+  text-align: center;
+
+  @media screen and (max-width: 767px) {
+    // Mobile
+    --padding-top: 50%;
+  }
+
+  @media screen and (min-width: 767px) {
+    // Desktop
+    --padding-top: 20%;
+    h1 {
+      font-size: 2rem;
+    }
+    ion-button {
+      font-size: 1rem;
+    }
+  }
+}
+
+ion-content {
+  --background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+  url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80")
+  no-repeat center center / cover;
+}
+
+
