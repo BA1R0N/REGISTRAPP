@@ -1,174 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      2: {{titleMessage()}}
+      Actividades
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{titleMessage()}}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-
-    <!--
-    <div class="debug-info" >
-      <h3>Debug information</h3>
-      <h4><strong>User Agent:</strong> {{userAgent}}</h4>
-      <p>{{device}}</p>
-    </div>
-    -->
 
   <div>
-
-    <!-- Usuario registrado -->
-    <div *ngIf="loggedIn()">
-
-
-      <!-- Inicio - Pagina generada pc -->
-      <div *ngIf="generatedPageDesktop()">
-
-
-    <!-- Generar QR plataforma PC -->
-    <div *ngIf="desktopBool()" class="qr-layout">
-      <h1>{{titleMessage()}}</h1>
-      <div>
-        <form (ngSubmit)="generateQR()">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label position="floating">Clase:</ion-label>
-                <ion-input  type="text" placeholder="Matematicas" [(ngModel)]="qrInfo.classname" [ngModelOptions]="{standalone: true}"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-button (click)="generateQR()" expand="block">Generar</ion-button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <p class="registered-as">Registrado como: {{getCurrentUser()}}</p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        </form>
-      </div>
-    </div>
-
-      </div>
-      <!-- Fin - Pagina generada pc -->
-
-      <!-- Pagina del qr generado -->
-      <div *ngIf="!generatedPageDesktop()">
-        <div class="qr-page">
-          <h1>QR generado para la clase: {{qrInfo.classname}}</h1>
-          <ion-button (click)="deleteCacheDesktop()">Reiniciar</ion-button>
-            <div class="custom-center">
-              <a target="_blank" href="{{qrInfo.image}}">
-                <img ngSrc="{{qrInfo.image}}" alt="Codigo QR" width="360" height="360">
-              </a>
-            </div>
-          <!-- Listado -->
-            <div>
-              <!-- Mensaje - lista vacia -->
-              <div *ngIf="getListLength() == 0">
-                <h2>Esperando a que se registren los estudiantes...</h2>
-              </div>
-
-              <div class="data-table" *ngIf="getListLength() !== 0">
-                <table>
-                  <tr>
-                    <th>Estudiantes:   <ion-badge color="primary">{{getListLength()}}</ion-badge></th>
-                  </tr>
-                  <tr *ngFor="let student of dataList">
-                    <td>{{ student }}</td>
-                  </tr>
-                </table>
-
-              </div>
-              <div>
-                <p>ID de la clase: <a target="_blank" href="{{getUrl()}}">{{this.qrInfo.token}}</a></p>
-              </div>
-              <div class="bottom-space">
-              </div>
-
-            </div>
-        </div>
-      </div>
-
-
-    <!-- Inicio - Pagina generada movil -->
-      <div *ngIf="!generatedPageMobile()">
-
-    <!-- Escanear QR plataforma Movil -->
-    <div *ngIf="!desktopBool()">
-      <div class="mobile-div">
-        <h1>Registrar asistencia</h1>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-button expand="block" (click)="scanCode()">Abrir camara</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </div>
-
-      </div>
-      <!-- Fin - Pagina generada movil -->
-
-      <div *ngIf="generatedPageMobile()">
-        <div class="mobile-div">
-          <h1>Se registro tu asistencia</h1>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <h2>Clase: {{registeredClass}}</h2>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <h3>Profesor: {{teacher}}</h3>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-button (click)="this.afterScanPage = false">Cerrar</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-
-      </div>
-
-
-
-
-    </div>
-    <!-- Fin bloque - Usuario registrado -->
-
-
-    <!-- Bloque - Usuario no registrado -->
-    <div *ngIf="!loggedIn()">
-      <div class="not-logged-message">
-        <h1>No estas registrado</h1>
-        <h3>Porfavor, registrate para continuar</h3>
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- Mensaje plataforma -->
-  <div class="platform-message">
-    <p>Plataforma: {{showPlatform()}}</p>
+    <app-account-card></app-account-card>
+    <app-list-activities></app-list-activities>
   </div>
 
 </ion-content>
