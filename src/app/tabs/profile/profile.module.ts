@@ -6,15 +6,19 @@ import { ProfilePage } from './profile.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { Tab3PageRoutingModule } from './profile-routing.module';
+import {ActionSheetComponent} from "../../components/action-sheet/action-sheet.component";
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    Tab3PageRoutingModule
-  ],
-  declarations: [ProfilePage]
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        Tab3PageRoutingModule
+    ],
+    exports: [
+        ActionSheetComponent
+    ],
+    declarations: [ProfilePage, ActionSheetComponent]
 })
 export class Tab3PageModule {}

@@ -14,22 +14,10 @@ export class ProfilePage {
 
   }
 
+  // Returns true if the user id is not the default value
   isLoggedIn():boolean {
-
     const user_id:string = this.authService.getCurrentUserId();
-
-    if (user_id === '?') {
-      console.log('user is dead: ',user_id)
-
-      const fuck:boolean = false;
-      console.log('for real: ',fuck)
-
-      return fuck;
-
-    } else {
-      console.log('user is fucked: ', user_id)
-      return true;
-    }
+    return user_id !== '?';
   }
 
   async signOut() {
