@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      1: Inicio
+      Inicio
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+
+<app-account-card></app-account-card>
+
+</ion-content>
+
+
+
+
+<!--
+
+ <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
@@ -17,26 +27,25 @@
 
   <div class="welcome-page">
 
-    <!-- Usuario logeado -->
-  <div *ngIf="loggedIn()">
-    <h1>Bienvenido, {{readUserName()}}</h1>
 
-    <div *ngIf="isMobile()">
-      <h3>Escanear QR <a href="/tabs/tab2">aqui</a></h3>
-    </div>
+<div *ngIf="loggedIn()">
+  <h1>Bienvenido, {{readUserName()}}</h1>
 
-    <div *ngIf="!isMobile()">
-      <h3>Generar QR <a href="/tabs/tab2">aqui</a></h3>
-    </div>
+  <div *ngIf="isMobile()">
+    <h3>Escanear QR <a href="/tabs/tab2">aqui</a></h3>
   </div>
 
-    <!-- Usuario no registrado -->
-  <div *ngIf="!loggedIn()">
-    <h1>Bienvenido, {{readUserName()}}</h1>
-    <h3>Registrarse <a href="/tabs/tab3">aqui</a></h3>
+  <div *ngIf="!isMobile()">
+    <h3>Generar QR <a href="/tabs/tab2">aqui</a></h3>
   </div>
+</div>
 
 
-  </div>
+<div *ngIf="!loggedIn()">
+  <h1>Bienvenido, {{readUserName()}}</h1>
+  <h3>Registrarse <a href="/tabs/tab3">aqui</a></h3>
+</div>
 
-</ion-content>
+
+</div>
+-->
