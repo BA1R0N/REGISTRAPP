@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {getHello} from '../../services/crud/crud.service'
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,11 @@ export class HomePage {
 
   getUserAgent(): string {
     return navigator.userAgent;
+  }
+
+  getHola() {
+    const x  = getHello()
+    return x
   }
 
 }
