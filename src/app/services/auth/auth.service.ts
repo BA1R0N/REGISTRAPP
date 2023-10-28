@@ -91,6 +91,16 @@ export class AuthService {
     return this.supabase.auth.setSession({ access_token, refresh_token });
   }
 
+/*
+  async getUserEmail() {
+    if (this.currentUser.value) {
+      return (this.currentUser.value as User).email;
+    } else {
+      return '?';
+    }
+  }
+*/
+
   // Retorna true si el usuario está autenticado
   isAuthenticated(): boolean {
       const user_id:string = this.getCurrentUserId();
