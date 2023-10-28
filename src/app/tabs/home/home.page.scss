@@ -7,3 +7,10 @@
   align-items: center;
   height: 100%;
 }
+
+.download-message {
+  // fix it at the bottom
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

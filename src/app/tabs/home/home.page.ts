@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {getHello} from '../../services/crud/crud.service'
+import { Component } from '@angular/core';
+import { ReadService } from '../../crud/read.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,9 @@ import {getHello} from '../../services/crud/crud.service'
 })
 export class HomePage {
   userAgent: string = this.getUserAgent();
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+  ) {}
 
   readUserName():string {
     let local_user = localStorage.getItem('user');
@@ -41,9 +44,10 @@ export class HomePage {
     return navigator.userAgent;
   }
 
-  getHola() {
-    const x  = getHello()
-    return x
+  async getHola() {
+    const crud = new ReadService(this.authService);
+    const x = await crud.isProfileCompleted();
+    console.log('Is completed?: ',x)
   }
 
 }
