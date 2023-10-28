@@ -1,21 +1,23 @@
+
 ion-content {
+  /*
   @media screen and (max-width: 767px) {
     // Mobile
     --padding-top: 45%;
     --padding-start: 5%;
     --padding-end: 5%;
   }
-
+*/
   @media screen and (min-width: 767px) {
     // Desktop
-    --padding-top: 10%;
-    --padding-start: 20%;
-    --padding-end: 20%;
+    --padding-top: 1%;
+    --padding-start: 3%;
+    --padding-end: 3%;
   }
 
 }
-
-.login-msg {
+/*
+.h1-msg {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -25,3 +27,9 @@ ion-grid {
 }
 
 
+app-account-card {
+  h1 {
+    text-align: center;
+  }
+}
+*/
