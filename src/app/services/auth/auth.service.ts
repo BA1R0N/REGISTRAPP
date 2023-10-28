@@ -20,10 +20,10 @@ export class AuthService {
     );
 
     this.supabase.auth.onAuthStateChange((event, sess) => {
-        console.log('SUPABAS AUTH CHANGED: ', event);
-        console.log('SUPABAS AUTH CHANGED sess: ', sess);
+        //console.log('SUPABAS AUTH CHANGED: ', event);
+        //console.log('SUPABAS AUTH CHANGED sess: ', sess);
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          console.log('SET USER');
+          //console.log('SET USER');
 
           // @ts-ignore
           this.currentUser.next(sess.user);
@@ -37,11 +37,11 @@ export class AuthService {
 
   async loadUser() {
     if (this.currentUser.value) {
-      console.log('ALREADY GOT USER:', this.currentUser.value);
+      //console.log('ALREADY GOT USER:', this.currentUser.value);
       return;
     }
     const user = await this.supabase.auth.getUser();
-    console.log('USER:', user);
+    //console.log('USER:', user);
 
     if (user.data.user) {
       this.currentUser.next(user.data.user);
@@ -91,6 +91,7 @@ export class AuthService {
     return this.supabase.auth.setSession({ access_token, refresh_token });
   }
 
+  // Retorna true si el usuario está autenticado
   isAuthenticated(): boolean {
       const user_id:string = this.getCurrentUserId();
       return user_id !== '?';
