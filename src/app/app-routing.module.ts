@@ -24,6 +24,10 @@ const routes: Routes = [
     redirectTo: '/download',
   },
   {
+    path: 'account-confirmation',
+    loadChildren: () => import('./account-confirmation/account-confirmation.module').then( m => m.AccountConfirmationPageModule)
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },
