@@ -1,0 +1,39 @@
+<ion-card>
+  <ion-card-content>
+
+    <form>
+
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input
+          type="text"
+          inputmode="text"
+          formControlName="first_name"
+          placeholder="John"
+        ></ion-input>
+        <!--<ion-item
+          slot="error"
+          *ngIf="(email?.dirty || email?.touched) && email?.errors"
+        >Este campo no puede estar vacio</ion-item> -->
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input
+          type="text"
+          inputmode="text"
+          formControlName="last_name"
+          placeholder="Doe"
+        ></ion-input>
+        <!--<ion-item
+          slot="error"
+          *ngIf="(email?.dirty || email?.touched) && email?.errors"
+        >Este campo no puede estar vacio</ion-item> -->
+      </ion-item>
+
+
+
+    </form>
+
+  </ion-card-content>
+</ion-card>
