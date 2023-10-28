@@ -1,0 +1,13 @@
+.ios {
+  .h1-msg {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .md {
+    .h1-msg {
+      text-align: center;
+    }
+  }
+}

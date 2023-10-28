@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth/auth.service';
+import {ReadService} from "../../crud/read.service";
+
 
 @Component({
   selector: 'app-account-card',
@@ -7,9 +9,11 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./account-card.component.scss'],
 })
 export class AccountCardComponent  implements OnInit {
+  fist_name: string = '';
 
   constructor(
     private authService: AuthService,
+    private readService: ReadService
   ) { }
 
   // Retornar true si el usuario está logueado
@@ -18,6 +22,17 @@ export class AccountCardComponent  implements OnInit {
     return user_id !== '?';
   }
 
-  ngOnInit() {}
+
+
+  ngOnInit() {
+    this.readService.getNames().then((data) => {
+      console.log('data: ', data)
+      if (data) {
+        this.fist_name = data[0].first_name;
+      }
+    });
+
+  }
+
 
 }
