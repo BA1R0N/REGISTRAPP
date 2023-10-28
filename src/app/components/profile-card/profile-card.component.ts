@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./profile-card.component.scss'],
 })
 export class ProfileCardComponent  implements OnInit {
+  email:string = 'email';
 
   constructor(
     private authService: AuthService,
@@ -15,6 +16,13 @@ export class ProfileCardComponent  implements OnInit {
   async signOut() {
     await this.authService.signOut()
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        // @ts-ignore
+        this.email = user.email;
+      }
+    });
+  }
 
 }
