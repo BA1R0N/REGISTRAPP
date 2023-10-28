@@ -16,10 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./user/signup/signup.module').then( m => m.SignupPageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
     path: 'download',
     loadChildren: () => import('./download/download.module').then( m => m.DownloadPageModule)
   },
