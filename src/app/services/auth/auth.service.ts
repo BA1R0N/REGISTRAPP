@@ -66,6 +66,7 @@ export class AuthService {
 
   async signOut() {
     await this.supabase.auth.signOut();
+    this.clearCookiesAndLocalStorage();
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
@@ -107,6 +108,15 @@ export class AuthService {
   isAuthenticated(): boolean {
       const user_id:string = this.getCurrentUserId();
       return user_id !== '?';
+  }
+
+  clearCookiesAndLocalStorage() {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [name, _] = cookie.split("=");
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    localStorage.clear();
   }
 
 
