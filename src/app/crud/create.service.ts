@@ -18,9 +18,18 @@ export class CreateService {
   }
 
 
-  async completeProfile(first_name:string, last_name:string, user_type:string) {
+  async completeProfile(first_name:string, last_name:string, type:string, user_id:string) {
+    const { data, error } = await this.supabase.from('user_profile')
+      .insert([{ first_name, last_name, type, completed: true,'user_id': user_id }])
+      .eq('user_id', user_id);
 
+    if (error) {
+      console.error(error);
+      return false;
+    }
 
+    console.log('Server response:', data)
+    return true;
   }
 
 

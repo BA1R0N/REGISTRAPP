@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { createClient,SupabaseClient } from '@supabase/supabase-js'
-import { environment } from 'src/environments/environment';
+import {Injectable} from '@angular/core';
+import {createClient, SupabaseClient} from '@supabase/supabase-js'
+import {environment} from 'src/environments/environment';
 import {AuthService} from "../services/auth/auth.service";
 
 @Injectable({
@@ -25,15 +25,15 @@ export class ReadService {
     const { data, error } = await this.supabase.from('user_profile').select('completed').eq('user_id', user_id);
 
     if (error) {
-      console.log('There was an error')
-      console.error(error);
+      console.error('There was an error:', error)
       return false;
     }
-  try {
-    return data[0].completed;
-  } catch (e) {
-    return false;
-  }
+
+    try {
+      return data[0].completed;
+    } catch (e) {
+      return false;
+    }
 
   }
 
