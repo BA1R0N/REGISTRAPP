@@ -1,7 +1,7 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ProfilePage } from './profile.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
@@ -12,15 +12,16 @@ import {CompleteProfileComponent} from "../../components/complete-profile/comple
 import {ProfileCardComponent} from "../../components/profile-card/profile-card.component";
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    Tab3PageRoutingModule,
-    Tab1PageModule,
-    NgOptimizedImage
-  ],
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        Tab3PageRoutingModule,
+        Tab1PageModule,
+        NgOptimizedImage,
+        ReactiveFormsModule
+    ],
     exports: [
         ActionSheetComponent
     ],

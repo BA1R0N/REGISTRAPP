@@ -8,7 +8,7 @@ import { ReadService } from "../../crud/read.service";
   styleUrls: ['profile.page.scss']
 })
 export class ProfilePage {
-  profileCompleted:boolean = false;
+  profileCompleted:boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -16,8 +16,9 @@ export class ProfilePage {
   ) { }
 
   // Returns true if the user id is not the default value
-  isLoggedIn():boolean {
-    const user_id:string = this.authService.getCurrentUserId();
+  isLoggedIn(): boolean {
+    const user_id: string = this.authService.getCurrentUserId();
+
     return user_id !== '?';
   }
 
@@ -26,18 +27,9 @@ export class ProfilePage {
     await this.authService.signOut()
   }
 
-  ngOnInit() {
-    this.checkProfileCompleted().then(r =>
-      console.log('profileCompleted: ', this.profileCompleted)
-    );
-  }
+  ngOnInit() {}
 
-  async checkProfileCompleted() {
-    const user_id:string = this.authService.getCurrentUserId();
-    console.log('user_id: ', user_id)
-    this.profileCompleted = await this.readService.isProfileCompleted(user_id);
-    console.log('Completed?: ', this.profileCompleted)
-  }
+
 
 
 }
