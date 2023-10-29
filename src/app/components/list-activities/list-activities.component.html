@@ -2,6 +2,7 @@
   <ion-card-content>
     <h1>Actividades disponibles</h1>
     <ion-list>
+
       <ion-item>
         <ion-icon aria-hidden="true" name="qr-code-outline" slot="start"></ion-icon>
         <ion-label>Registrar asistencia con QR</ion-label>
@@ -17,6 +18,7 @@
           <div *ngIf="!isLogged()">Debes iniciar sesión</div>
         </ion-button>
       </ion-item>
+
       <ion-item>
         <ion-icon aria-hidden="true" name="document-text-outline" slot="start"></ion-icon>
         <ion-label>Formularios</ion-label>
@@ -32,6 +34,23 @@
           <div *ngIf="!isLogged()">Debes iniciar sesión</div>
         </ion-button>
       </ion-item>
+
+      <ion-item>
+        <ion-icon aria-hidden="true" name="briefcase-outline" slot="start"></ion-icon>
+        <ion-label>Registrar asignaturas</ion-label>
+        <ion-button
+          type="button"
+          expand="block"
+          color="primary"
+          fill="outline"
+          routerLink="/tabs/activities/classes"
+          disabled="{{!isLogged()}}"
+        >
+          <div *ngIf="isLogged()">Abrir</div>
+          <div *ngIf="!isLogged()">Debes iniciar sesión</div>
+        </ion-button>
+      </ion-item>
+
     </ion-list>
   </ion-card-content>
 </ion-card>
