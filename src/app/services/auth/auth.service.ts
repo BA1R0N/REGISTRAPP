@@ -24,7 +24,6 @@ export class AuthService {
         //console.log('SUPABAS AUTH CHANGED sess: ', sess);
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
           //console.log('SET USER');
-
           // @ts-ignore
           this.currentUser.next(sess.user);
         } else {
@@ -61,8 +60,7 @@ export class AuthService {
 
   signInWithEmail(email: string) {
     const redirectTo = isPlatform('capacitor') ? 'login' : `${window.location.origin}/tabs/profile`;
-    console.log('set redirect: ', redirectTo);
-
+    //console.log('set redirect: ', redirectTo);
     return this.supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
   }
 
@@ -89,6 +87,10 @@ export class AuthService {
 
   async setSession(access_token: any, refresh_token: any) {
     return this.supabase.auth.setSession({ access_token, refresh_token });
+  }
+
+  async refreshSessions() {
+    return this.supabase.auth.refreshSession();
   }
 
 /*
