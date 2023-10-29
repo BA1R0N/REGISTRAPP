@@ -12,6 +12,14 @@ const routes: Routes = [
     path: 'qr',
     loadChildren: () => import('./qr/qr.module').then( m => m.QrPageModule),
     canActivate: [authGuard]
+  },
+  {
+    path: 'classes',
+    loadChildren: () => import('./classes/classes.module').then( m => m.ClassesPageModule)
+  },
+  {
+    path: 'forms',
+    loadChildren: () => import('./forms/forms.module').then( m => m.FormsPageModule)
   }
 ];
 
