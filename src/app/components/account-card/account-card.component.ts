@@ -22,17 +22,7 @@ export class AccountCardComponent  implements OnInit {
     return user_id !== '?';
   }
 
-
-
-  ngOnInit() {
-    this.readService.getNames().then((data) => {
-      console.log('data: ', data)
-      if (data) {
-        this.fist_name = data[0].first_name;
-      }
-    });
-
-  }
+  ngOnInit() { }
 
 
 }
