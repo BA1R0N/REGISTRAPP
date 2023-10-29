@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createClient,SupabaseClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { environment } from 'src/environments/environment';
 
 
@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 export class CreateService {
   private supabase: SupabaseClient;
 
-  constructor() {
+  constructor(
+  ) {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
@@ -18,6 +19,7 @@ export class CreateService {
 
 
   async completeProfile(first_name:string, last_name:string, user_type:string) {
+
 
   }
 

@@ -8,7 +8,6 @@ import {AuthService} from "../services/auth/auth.service";
 })
 export class ReadService {
   private supabase: SupabaseClient;
-  user_id: string = this.authService.getCurrentUserId();
 
   constructor(
     private authService: AuthService,
@@ -21,25 +20,30 @@ export class ReadService {
 
 
   // Retorna true si el perfil del usuario esta completo
-  async isProfileCompleted():Promise<boolean> {
-    const { data, error } = await this.supabase
-        .from('user_profile')
-        .select('completed')
-        .eq('user_id', this.user_id);
+  async isProfileCompleted(user_id:string):Promise<boolean> {
+
+    const { data, error } = await this.supabase.from('user_profile').select('completed').eq('user_id', user_id);
+
     if (error) {
+      console.log('There was an error')
       console.error(error);
       return false;
     }
+  try {
     return data[0].completed;
+  } catch (e) {
+    return false;
+  }
+
   }
 
   // Retorna el nombre y apellido del usuario
-  async getNames() {
-    console.log('user_id: ', this.user_id)
+  async getNames(user_id:string) {
+    //console.log('user_id: ', this.user_id)
     const { data, error } = await this.supabase
         .from('user_profile')
         .select('first_name, last_name')
-        .eq('user_id', this.user_id);
+        .eq('user_id', user_id);
 
     if (error) {
       console.error(error);
