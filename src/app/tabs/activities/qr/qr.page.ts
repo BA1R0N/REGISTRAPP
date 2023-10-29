@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Platform} from "@ionic/angular";
 
 @Component({
   selector: 'app-qr',
@@ -21,7 +22,8 @@ export class QrPage implements OnInit {
 
   constructor(
     private barcodeScanner: BarcodeScanner,
-    private authService: AuthService
+    private authService: AuthService,
+    private platform: Platform
   ) {}
 
 
@@ -80,13 +82,6 @@ export class QrPage implements OnInit {
     return this.mobileOrDesktop() != 'Mobile';
   }
 
-  titleMessage():string {
-    if (this.desktopBool()) {
-      return 'Generar QR';
-    } else {
-      return 'Escanear QR';
-    }
-  }
 
   showPlatform():string {
     if (this.desktopBool()) {
@@ -135,18 +130,6 @@ export class QrPage implements OnInit {
     localStorage.setItem('token', token);
 
     this.ngOnInit();
-  }
-
-
-  loggedIn():boolean {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return false;
-    } else {
-      let user = JSON.parse(not_null_user);
-      return !(user.email == '' && user.password == '');
-    }
   }
 
 
@@ -206,7 +189,6 @@ export class QrPage implements OnInit {
     });
   }
 
-
   async scanCodeAction(){
     let post_url = 'https://api.registrapp.sebas.lat/a?token=' + this.scannedToken +'&email='+this.qrInfo.email;
 
@@ -221,6 +203,10 @@ export class QrPage implements OnInit {
     this.registeredClass = json.classname;
     this.teacher = json.teacher;
     console.log(json);
+  }
+
+  isApp():boolean {
+    return this.platform.is('capacitor');
   }
 
 

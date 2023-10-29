@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/activities"></ion-back-button>
     </ion-buttons>
-    <ion-title>QR</ion-title>
+    <ion-title>Registro de asistencia</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,6 @@
 
   <div>
 
-    <!-- Usuario registrado -->
 
 
 
@@ -20,38 +19,66 @@
 
 
         <!-- Generar QR plataforma PC -->
-        <div *ngIf="desktopBool()" class="qr-layout">
+        <div class="cards">
+
           <ion-card>
+            <ion-card-header>
+              <ion-card-title style="font-size: 2rem">Generar codigo QR</ion-card-title>
+              <ion-card-subtitle>Genera un codigo qr para el registro de asistencia</ion-card-subtitle>
+            </ion-card-header>
             <ion-card-content>
-                <h1>{{titleMessage()}}</h1>
-                <div>
-                  <form (ngSubmit)="generateQR()">
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col>
-                          <ion-item>
-                            <ion-label position="floating">Clase:</ion-label>
-                            <ion-input  type="text" placeholder="Matematicas" [(ngModel)]="qrInfo.classname" [ngModelOptions]="{standalone: true}"></ion-input>
-                          </ion-item>
-                        </ion-col>
-                      </ion-row>
-                      <ion-row>
-                        <ion-col>
-                          <ion-button (click)="generateQR()" expand="block">Generar</ion-button>
-                          <ion-button routerLink="generated/" expand="block">abrir generated</ion-button>
-                        </ion-col>
-                      </ion-row>
-                      <ion-row>
-                        <ion-col>
-                          <p class="registered-as">Registrado como: {{getCurrentUser()}}</p>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </form>
-                </div>
+
+              <form (ngSubmit)="generateQR()">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label position="floating">Clase:</ion-label>
+                        <ion-input  type="text" placeholder="Matematicas" [(ngModel)]="qrInfo.classname" [ngModelOptions]="{standalone: true}"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-button (click)="generateQR()" >Generar</ion-button>
+                      <ion-button routerLink="generated/" >abrir generated</ion-button>
+                      <p>Registrado como: {{getCurrentUser()}}</p>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </form>
+
+            </ion-card-content>
+
+          </ion-card>
+
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title style="font-size: 2rem">Registrar asistencia</ion-card-title>
+              <ion-card-subtitle>Registra tu asistencia escaneando un codigo qr</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div *ngIf="isApp()">
+                <ion-button  (click)="scanCode()">Abrir camara</ion-button>
+              </div>
+              <div *ngIf="!isApp()">
+                <ion-button routerLink="/download">
+                  Descargar aplicación
+                  <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
+                </ion-button>
+                <p>Esta función solo esta disponible en la aplicación movil</p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
+
 
       </div>
       <!-- Fin - Pagina generada pc -->
@@ -98,19 +125,8 @@
       <!-- Inicio - Pagina generada movil -->
       <div *ngIf="!generatedPageMobile()">
 
-        <!-- Escanear QR plataforma Movil -->
-        <div *ngIf="!desktopBool()">
-          <div class="mobile-div">
-            <h1>Registrar asistencia</h1>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-button expand="block" (click)="scanCode()">Abrir camara</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </div>
+
+
 
       </div>
       <!-- Fin - Pagina generada movil -->
@@ -148,14 +164,9 @@
 
 
 
-
-
-
   <!-- Platform -->
   <div class="platform-text">
     <p>Plataforma: {{showPlatform()}}</p>
   </div>
-
-
 
 </ion-content>
