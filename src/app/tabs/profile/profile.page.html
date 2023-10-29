@@ -8,9 +8,19 @@
 
 <ion-content>
 
-  <!-- User is logged -->
+  <!-- User is logged in -->
   <div *ngIf="isLoggedIn()" class="profile">
-    <app-profile-card></app-profile-card>
+
+    <!-- User profile is completed -->
+    <div *ngIf="profileCompleted">
+      <app-profile-card></app-profile-card>
+    </div>
+
+    <!-- User profile is not completed -->
+    <div *ngIf="!profileCompleted">
+      <app-complete-profile></app-complete-profile>
+    </div>
+
   </div>
 
   <!-- User is not logged in -->
