@@ -19,12 +19,18 @@ export class CompleteProfileComponent  implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {}
 
   async confirmCompletion() {
 
+  }
+
+  async reload() {
+    console.log('clicked')
+    await this.authService.refreshSessions();
   }
 
 }
