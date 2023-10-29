@@ -1,0 +1,23 @@
+
+ion-content {
+
+  @media screen and (min-width: 767px) {
+    // Desktop
+    --padding-top: 1%;
+    --padding-start: 15%;
+    --padding-end: 15%;
+    .card-title {
+      font-size: 2.4rem;
+    }
+  }
+}
+
+.qr-code {
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    border-radius: 15px;
+  }
+}

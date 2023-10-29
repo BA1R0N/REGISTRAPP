@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-qr',
@@ -18,7 +19,10 @@ export class QrPage implements OnInit {
   teacher: string = '';
 
 
-  constructor(private barcodeScanner: BarcodeScanner) {}
+  constructor(
+    private barcodeScanner: BarcodeScanner,
+    private authService: AuthService
+  ) {}
 
 
   qrInfo = {
@@ -30,8 +34,16 @@ export class QrPage implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        // @ts-ignore
+        console.log('user email:', user.email);
+        // @ts-ignore
+        this.qrInfo.email = user.email;
+      }
+    });
     if (this.qrInfo.token == '0') {
-      console.log('token es 0');
+      //console.log('token es 0');
     } else {
       this.intervalId = setInterval(() => {
         this.fetchData().then((data) => {
@@ -85,14 +97,14 @@ export class QrPage implements OnInit {
   }
 
   getCurrentUser():string {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return 'null'
-    } else {
-      let user = JSON.parse(not_null_user);
-      return user.email
-    }
+    let email: string = '';
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        // @ts-ignore
+        email = user.email;
+      }
+    })
+    return email;
   }
 
   async generateQR() {
