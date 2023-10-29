@@ -1,0 +1,8 @@
+ion-content {
+  @media screen and (min-width: 767px) {
+    // Desktop
+    --padding-top: 1%;
+    --padding-start: 3%;
+    --padding-end: 3%;
+  }
+}
