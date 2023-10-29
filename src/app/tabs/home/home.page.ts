@@ -46,7 +46,9 @@ export class HomePage {
 
   async getHola() {
     const crud = new ReadService(this.authService);
-    const x = await crud.isProfileCompleted();
+    let idd = this.authService.getCurrentUserId();
+    console.log('idd: ', idd)
+    const x = await crud.isProfileCompleted(this.authService.getCurrentUserId());
     console.log('Is completed?: ',x)
   }
 
