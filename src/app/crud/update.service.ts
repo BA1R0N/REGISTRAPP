@@ -15,6 +15,7 @@ export class UpdateService {
     );
   }
 
+  // Actualiza el estado de completitud del perfil del usuario
   async updateCompletedProfile(user_id:string) {
     const { data, error } = await this.supabase
       .from('user_profile')

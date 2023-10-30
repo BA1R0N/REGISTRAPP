@@ -53,7 +53,7 @@ export class ReadService {
     return data;
   }
 
-
+  // Retorna las asignaturas registradas por el usuario
   async getClasses(user_id:string) {
     const { data, error } = await this.supabase
         .from('classes')
