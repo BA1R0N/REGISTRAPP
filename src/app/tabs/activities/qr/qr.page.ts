@@ -217,8 +217,6 @@ export class QrPage implements OnInit {
         localStorage.setItem('scannedUrl', 'error');
         this.router.navigate(['/tabs/activities/qr/']);
       } else {
-
-
         this.router.navigate(['/tabs/activities/qr/scanned']);
       }
     }).catch(err => {
