@@ -8,44 +8,12 @@
 
 <ion-content>
 
-<app-account-card></app-account-card>
+  <app-account-card></app-account-card>
+
+  <!--<ion-button (click)="getHola()">Get x</ion-button>-->
+
+  <div class="download-message" *ngIf="!isMobile()">
+    <app-download-card></app-download-card>
+  </div>
 
 </ion-content>
-
-
-
-
-<!--
-
- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inicio</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
-
-  <div class="welcome-page">
-
-
-<div *ngIf="loggedIn()">
-  <h1>Bienvenido, {{readUserName()}}</h1>
-
-  <div *ngIf="isMobile()">
-    <h3>Escanear QR <a href="/tabs/tab2">aqui</a></h3>
-  </div>
-
-  <div *ngIf="!isMobile()">
-    <h3>Generar QR <a href="/tabs/tab2">aqui</a></h3>
-  </div>
-</div>
-
-
-<div *ngIf="!loggedIn()">
-  <h1>Bienvenido, {{readUserName()}}</h1>
-  <h3>Registrarse <a href="/tabs/tab3">aqui</a></h3>
-</div>
-
-
-</div>
--->

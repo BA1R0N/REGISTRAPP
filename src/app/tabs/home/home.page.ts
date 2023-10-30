@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { ReadService } from '../../crud/read.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,9 @@ import {Component} from '@angular/core';
 })
 export class HomePage {
   userAgent: string = this.getUserAgent();
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+  ) {}
 
   readUserName():string {
     let local_user = localStorage.getItem('user');
@@ -38,6 +42,14 @@ export class HomePage {
 
   getUserAgent(): string {
     return navigator.userAgent;
+  }
+
+  async getHola() {
+    const crud = new ReadService(this.authService);
+    let idd = this.authService.getCurrentUserId();
+    console.log('idd: ', idd)
+    const x = await crud.isProfileCompleted(this.authService.getCurrentUserId());
+    console.log('Is completed?: ',x)
   }
 
 }

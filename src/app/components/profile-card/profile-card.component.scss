@@ -1,0 +1,25 @@
+.profile-buttons {
+    padding-top: 30px;
+  padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    ion-button {
+      width: 100%;
+      margin: 0 5px;
+    }
+}
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+}
+
+.pfp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+

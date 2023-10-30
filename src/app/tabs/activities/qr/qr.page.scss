@@ -1,21 +1,15 @@
+ion-content {
 
-.qr-layout {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
+  @media screen and (min-width: 767px) {
+    // Desktop
+    --padding-top: 1%;
+    --padding-start: 15%;
+    --padding-end: 15%;
+
+  }
 
 }
 
-.center-content ion-grid {
-  max-width: 500px;
-}
-
-.debug-info {
-  text-align: center;
-}
 
 .platform-text {
   text-align: center;
@@ -26,29 +20,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-
 }
 
-.registered-as {
-  opacity: 0.8;
-  font-size: 0.9em;
-}
-
-
-.not-logged-message {
-  text-align: center;
-  font-size: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-
-.mobile-div {
-  text-align: center;
-}
 
 .qr-image {
   width: 100%;
@@ -85,12 +58,6 @@
 }
 
 
-.custom-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
 
 .data-table {
   display: flex;
@@ -107,16 +74,7 @@
   border: 1px solid #000000
 }
 
-/*
-.data-table th {
-  background-color: #f2f2f2;
-}
 
-.data-table tr:nth-child(even) {
-  background-color: #dddddd;
-}
-*/
-
-.bottom-space {
-  margin-bottom: 90px;
+.cards {
+  text-align: center;
 }

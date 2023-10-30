@@ -16,16 +16,16 @@ const routes: Routes = [
     loadChildren: () => import('./user/signup/signup.module').then( m => m.SignupPageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
     path: 'download',
     loadChildren: () => import('./download/download.module').then( m => m.DownloadPageModule)
   },
   {
     path: 'descargar',
     redirectTo: '/download',
+  },
+  {
+    path: 'account-confirmation',
+    loadChildren: () => import('./account-confirmation/account-confirmation.module').then( m => m.AccountConfirmationPageModule)
   },
   {
     path: '404',

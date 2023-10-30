@@ -1,0 +1,46 @@
+<ion-card>
+  <ion-card-content>
+    <ion-card-header>
+      <ion-card-title>Completa tu perfil</ion-card-title>
+      <ion-card-subtitle>Antes de continuar completa tu perfil</ion-card-subtitle>
+    </ion-card-header>
+
+    <form (ngSubmit)="confirm()" [formGroup]="form_fields">
+
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input
+          type="text"
+          inputmode="text"
+          formControlName="first_name"
+          placeholder="John"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input
+          type="text"
+          inputmode="text"
+          formControlName="last_name"
+          placeholder="Doe"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Rol</ion-label>
+        <ion-select placeholder="Selecciona tu rol" formControlName="role">
+          <ion-select-option value="Estudiante">Estudiante</ion-select-option>
+          <ion-select-option value="Profesor">Profesor</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <br />
+
+      <ion-button type="submit" expand="block" strong="true" [disabled]="form_fields.invalid">
+        Aceptar
+      </ion-button>
+
+    </form>
+  </ion-card-content>
+</ion-card>

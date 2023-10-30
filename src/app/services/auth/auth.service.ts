@@ -12,6 +12,7 @@ export class AuthService {
   private supabase: SupabaseClient;
   // @ts-ignore
   private currentUser: BehaviorSubject<User | boolean> = new BehaviorSubject(null);
+  user_id:string = '?';
 
   constructor(private router: Router) {
     this.supabase = createClient(
@@ -20,11 +21,10 @@ export class AuthService {
     );
 
     this.supabase.auth.onAuthStateChange((event, sess) => {
-        console.log('SUPABAS AUTH CHANGED: ', event);
-        console.log('SUPABAS AUTH CHANGED sess: ', sess);
+        //console.log('SUPABAS AUTH CHANGED: ', event);
+        //console.log('SUPABAS AUTH CHANGED sess: ', sess);
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          console.log('SET USER');
-
+          //console.log('SET USER');
           // @ts-ignore
           this.currentUser.next(sess.user);
         } else {
@@ -37,11 +37,11 @@ export class AuthService {
 
   async loadUser() {
     if (this.currentUser.value) {
-      console.log('ALREADY GOT USER:', this.currentUser.value);
+      //console.log('ALREADY GOT USER:', this.currentUser.value);
       return;
     }
     const user = await this.supabase.auth.getUser();
-    console.log('USER:', user);
+    //console.log('USER:', user);
 
     if (user.data.user) {
       this.currentUser.next(user.data.user);
@@ -61,13 +61,13 @@ export class AuthService {
 
   signInWithEmail(email: string) {
     const redirectTo = isPlatform('capacitor') ? 'login' : `${window.location.origin}/tabs/profile`;
-    console.log('set redirect: ', redirectTo);
-
+    //console.log('set redirect: ', redirectTo);
     return this.supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
   }
 
   async signOut() {
     await this.supabase.auth.signOut();
+    this.clearCookiesAndLocalStorage();
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
@@ -81,6 +81,8 @@ export class AuthService {
 
   getCurrentUserId(): string {
     if (this.currentUser.value) {
+      this.user_id = (this.currentUser.value as User).id;
+      localStorage.setItem('user_id', (this.currentUser.value as User).id);
       return (this.currentUser.value as User).id;
     } else {
       return '?';
@@ -91,9 +93,33 @@ export class AuthService {
     return this.supabase.auth.setSession({ access_token, refresh_token });
   }
 
+  async refreshSessions() {
+    return this.supabase.auth.refreshSession();
+  }
+
+/*
+  async getUserEmail() {
+    if (this.currentUser.value) {
+      return (this.currentUser.value as User).email;
+    } else {
+      return '?';
+    }
+  }
+*/
+
+  // Retorna true si el usuario está autenticado
   isAuthenticated(): boolean {
       const user_id:string = this.getCurrentUserId();
       return user_id !== '?';
+  }
+
+  clearCookiesAndLocalStorage() {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [name, _] = cookie.split("=");
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    localStorage.clear();
   }
 
 

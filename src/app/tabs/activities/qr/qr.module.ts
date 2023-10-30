@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,7 +14,8 @@ import { QrPage } from './qr.page';
         FormsModule,
         IonicModule,
         QrPageRoutingModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        ReactiveFormsModule
     ],
   declarations: [QrPage]
 })

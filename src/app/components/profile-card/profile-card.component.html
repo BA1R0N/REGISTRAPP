@@ -1,0 +1,80 @@
+<ion-card>
+  <ion-card-content>
+
+    <div class="data-card">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="pfp-container">
+              <img class="profile-pic" src="https://img.icons8.com/ios-filled/500/user-male-circle.png" alt="user-male-circle"/>
+            </div>
+          </ion-col>
+          <ion-col>
+            <ion-chip>
+              <ion-label>{{role}}</ion-label>
+            </ion-chip>
+            <h1>{{names}}</h1>
+            <h2>{{email}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="profile-buttons">
+      <ion-button routerLink="edit/">
+        Editar perfil
+      </ion-button>
+
+      <ion-button (click)="signOut()">
+        Cerrar sesión
+      </ion-button>
+    </div>
+
+    <div>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-card-header>
+            <ion-card-title>Acciones recientes</ion-card-title>
+          </ion-card-header>
+          <ion-list>
+
+            <ion-item detail="false">
+              <ion-label>
+                <strong>Title </strong>
+                <br/>
+                <ion-note color="medium" class="ion-text-wrap">
+                  Details
+                </ion-note>
+              </ion-label>
+              <div class="metadata-end-wrapper" slot="end">
+                <ion-note color="medium">time: 06:11</ion-note>
+              </div>
+            </ion-item>
+
+            <!--
+            <div *ngFor="let i of recent_actions_array">
+              <ion-item detail="false">
+                <ion-label>
+                  <strong>{{i.title}}</strong>
+                  <br/>
+                  <ion-note color="medium" class="ion-text-wrap">
+                    {{i.action}}
+                  </ion-note>
+                </ion-label>
+                <div class="metadata-end-wrapper" slot="end">
+                  <ion-note color="medium">{{i.time}}</ion-note>
+                </div>
+              </ion-item>
+            </div>
+            -->
+
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+
+  </ion-card-content>
+</ion-card>

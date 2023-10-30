@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import {AuthService} from "../../../services/auth/auth.service";
+import {Platform} from "@ionic/angular";
+import {navigate} from "ionicons/icons";
+import {Router} from "@angular/router";
+import {ReadService} from "../../../crud/read.service";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-qr',
@@ -16,13 +22,28 @@ export class QrPage implements OnInit {
   afterScanPage: boolean = false;
   registeredClass: string = '';
   teacher: string = '';
+  classes: any[] = [];
+  show_button:boolean = false;
 
 
-  constructor(private barcodeScanner: BarcodeScanner) {}
+  form_fields = this.fb.nonNullable.group({
+    class: ['', Validators.required],
+  });
+
+  classname = this.form_fields.getRawValue().class;
+
+  constructor(
+    private fb: FormBuilder,
+    private barcodeScanner: BarcodeScanner,
+    private authService: AuthService,
+    private platform: Platform,
+    private router: Router,
+    private readService: ReadService
+  ) {}
 
 
   qrInfo = {
-    classname : 'matematicas',
+    classname : this.form_fields.getRawValue().class ?? '',
     token: localStorage.getItem('token') ?? 0,
     email: this.getCurrentUser(),
     image: localStorage.getItem('image') ?? '',
@@ -30,8 +51,17 @@ export class QrPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getClassList();
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        // @ts-ignore
+        console.log('user email:', user.email);
+        // @ts-ignore
+        this.qrInfo.email = user.email;
+      }
+    });
     if (this.qrInfo.token == '0') {
-      console.log('token es 0');
+      //console.log('token es 0');
     } else {
       this.intervalId = setInterval(() => {
         this.fetchData().then((data) => {
@@ -39,6 +69,8 @@ export class QrPage implements OnInit {
         });
       }, 2500);
     }
+
+    this.show_button = localStorage.getItem('show_button') == 'true';
   }
 
   ngOnDestroy() {
@@ -68,13 +100,6 @@ export class QrPage implements OnInit {
     return this.mobileOrDesktop() != 'Mobile';
   }
 
-  titleMessage():string {
-    if (this.desktopBool()) {
-      return 'Generar QR';
-    } else {
-      return 'Escanear QR';
-    }
-  }
 
   showPlatform():string {
     if (this.desktopBool()) {
@@ -85,23 +110,34 @@ export class QrPage implements OnInit {
   }
 
   getCurrentUser():string {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return 'null'
-    } else {
-      let user = JSON.parse(not_null_user);
-      return user.email
-    }
+    let email: string = '';
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        // @ts-ignore
+        email = user.email;
+      }
+    })
+    return email;
   }
 
   async generateQR() {
 
-    localStorage.setItem('generatedDesktop', 'true');
+    //localStorage.setItem('generatedDesktop', 'true');
+    localStorage.setItem('class', this.form_fields.getRawValue().class);
+    const sbtn = localStorage.getItem('show_button');
+    localStorage.setItem('show_button', 'true');
+
+    if (sbtn == 'true') {
+      this.show_button = true;
+    } else {
+      this.show_button = false;
+    }
 
     let email = this.getCurrentUser();
+    let classname = this.form_fields.getRawValue().class;
+    console.log('classname:', classname);
 
-    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + this.qrInfo.classname,
+    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + classname,
       {
         method: 'GET',
       }
@@ -123,18 +159,6 @@ export class QrPage implements OnInit {
     localStorage.setItem('token', token);
 
     this.ngOnInit();
-  }
-
-
-  loggedIn():boolean {
-    let local_user = localStorage.getItem('user');
-    let not_null_user:string = local_user ?? "empty";
-    if (not_null_user == "empty") {
-      return false;
-    } else {
-      let user = JSON.parse(not_null_user);
-      return !(user.email == '' && user.password == '');
-    }
   }
 
 
@@ -179,24 +203,32 @@ export class QrPage implements OnInit {
   }
 
   scanCode() {
+
     localStorage.removeItem('scannedUrl')
+
     this.barcodeScanner.scan().then(barcodeData => {
       let scannedToken:string = barcodeData.text.split('?token=') [1];
       this.scannedToken = scannedToken;
+      localStorage.setItem('token', scannedToken);
       this.afterScanPage = true;
-      localStorage.setItem('scannedUrl', scannedToken);
+
       this.scanCodeAction().then(r => console.log(r));
-      console.log('Barcode data', barcodeData);
+      if (barcodeData.cancelled) {
+        localStorage.setItem('scannedUrl', 'error');
+        this.router.navigate(['/tabs/activities/qr/']);
+      } else {
+        this.router.navigate(['/tabs/activities/qr/scanned']);
+      }
     }).catch(err => {
       console.log('Error', err);
       localStorage.setItem('scannedUrl', 'error');
-      return 'Error';
+      this.router.navigate(['/tabs/activities/qr']);
     });
   }
 
-
   async scanCodeAction(){
     let post_url = 'https://api.registrapp.sebas.lat/a?token=' + this.scannedToken +'&email='+this.qrInfo.email;
+    localStorage.setItem('scannedUrl', post_url);
 
     let response = await fetch(post_url, {
       method: 'POST',
@@ -208,8 +240,37 @@ export class QrPage implements OnInit {
     let json = await response.json();
     this.registeredClass = json.classname;
     this.teacher = json.teacher;
+    localStorage.setItem('class', this.registeredClass);
+    localStorage.setItem('teacher', this.teacher);
     console.log(json);
   }
 
+  isApp():boolean {
+    return this.platform.is('capacitor');
+  }
+
+  getClassList() {
+    this.readService.getClasses(this.authService.getCurrentUserId()).then((data) => {
+      if (data) {
+        this.classes = data;
+      } else {
+        this.classes = [];
+      }
+    })
+
+  }
+
+  showButton():boolean {
+    const state = localStorage.getItem('show_button');
+    console.log('state:', state)
+
+    if (localStorage.getItem('show_button') == 'true') {
+      return true;
+    } else if (localStorage.getItem('show_button') == 'false') {
+      return false;
+    } else {
+      return false;
+    }
+  }
 
 }
