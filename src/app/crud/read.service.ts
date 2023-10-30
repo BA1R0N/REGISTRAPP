@@ -37,12 +37,27 @@ export class ReadService {
 
   }
 
-  // Retorna el nombre y apellido del usuario
-  async getNames(user_id:string) {
+  // Retorna la informacion del usuario
+  async getUserData(user_id:string) {
     //console.log('user_id: ', this.user_id)
     const { data, error } = await this.supabase
         .from('user_profile')
-        .select('first_name, last_name')
+        .select('first_name, last_name, type')
+        .eq('user_id', user_id);
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    return data;
+  }
+
+
+  async getClasses(user_id:string) {
+    const { data, error } = await this.supabase
+        .from('classes')
+        .select('class_name, class_code, teacher_email')
         .eq('user_id', user_id);
 
     if (error) {

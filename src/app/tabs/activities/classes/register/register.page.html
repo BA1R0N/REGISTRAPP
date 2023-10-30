@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/activities/classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrar una clase</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="confirm()" [formGroup]="form_fields">
+
+        <ion-item>
+          <ion-label position="stacked">Nombre de la clase</ion-label>
+          <ion-input
+            type="text"
+            inputmode="text"
+            formControlName="name"
+            placeholder="Matematicas"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Codigo</ion-label>
+          <ion-input
+            type="text"
+            inputmode="text"
+            formControlName="class_code"
+            placeholder="Mat-01"
+          ></ion-input>
+        </ion-item>
+
+        <br />
+
+        <ion-button type="submit" expand="block" strong="true" [disabled]="form_fields.invalid">
+          Registrar
+        </ion-button>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

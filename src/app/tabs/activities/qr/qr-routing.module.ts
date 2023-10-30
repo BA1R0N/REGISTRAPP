@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'generated',
     loadChildren: () => import('./generated/generated.module').then( m => m.GeneratedPageModule)
+  },
+  {
+    path: 'scanned',
+    loadChildren: () => import('./scanned/scanned.module').then( m => m.ScannedPageModule)
   }
 ];
 

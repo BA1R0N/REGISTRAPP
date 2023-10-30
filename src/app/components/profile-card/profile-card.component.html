@@ -11,9 +11,9 @@
           </ion-col>
           <ion-col>
             <ion-chip>
-              <ion-label>Student</ion-label>
+              <ion-label>{{role}}</ion-label>
             </ion-chip>
-            <h1>John Doe</h1>
+            <h1>{{names}}</h1>
             <h2>{{email}}</h2>
           </ion-col>
         </ion-row>
@@ -52,48 +52,22 @@
               </div>
             </ion-item>
 
-            <ion-item detail="false">
-              <ion-label>
-                <strong>Title </strong>
-                <br/>
-                <ion-note color="medium" class="ion-text-wrap">
-                  Details
-                </ion-note>
-              </ion-label>
-              <div class="metadata-end-wrapper" slot="end">
-                <ion-note color="medium">time: 06:11</ion-note>
-
-              </div>
-            </ion-item>
-
-            <ion-item detail="false">
-              <ion-label>
-                <strong>Title </strong>
-                <br/>
-                <ion-note color="medium" class="ion-text-wrap">
-                  Details
-                </ion-note>
-              </ion-label>
-              <div class="metadata-end-wrapper" slot="end">
-                <ion-note color="medium">time: 06:11</ion-note>
-
-              </div>
-            </ion-item>
-
-            <ion-item detail="false">
-              <ion-label>
-                <strong>Title </strong>
-                <br/>
-                <ion-note color="medium" class="ion-text-wrap">
-                  Details
-                </ion-note>
-              </ion-label>
-              <div class="metadata-end-wrapper" slot="end">
-                <ion-note color="medium">time: 06:11</ion-note>
-
-              </div>
-            </ion-item>
-
+            <!--
+            <div *ngFor="let i of recent_actions_array">
+              <ion-item detail="false">
+                <ion-label>
+                  <strong>{{i.title}}</strong>
+                  <br/>
+                  <ion-note color="medium" class="ion-text-wrap">
+                    {{i.action}}
+                  </ion-note>
+                </ion-label>
+                <div class="metadata-end-wrapper" slot="end">
+                  <ion-note color="medium">{{i.time}}</ion-note>
+                </div>
+              </ion-item>
+            </div>
+            -->
 
 
           </ion-list>

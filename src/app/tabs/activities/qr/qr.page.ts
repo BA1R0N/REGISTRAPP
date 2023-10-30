@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {AuthService} from "../../../services/auth/auth.service";
 import {Platform} from "@ionic/angular";
+import {navigate} from "ionicons/icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-qr',
@@ -23,7 +25,8 @@ export class QrPage implements OnInit {
   constructor(
     private barcodeScanner: BarcodeScanner,
     private authService: AuthService,
-    private platform: Platform
+    private platform: Platform,
+    private router: Router
   ) {}
 
 
@@ -174,18 +177,25 @@ export class QrPage implements OnInit {
   }
 
   scanCode() {
+
     localStorage.removeItem('scannedUrl')
+
     this.barcodeScanner.scan().then(barcodeData => {
       let scannedToken:string = barcodeData.text.split('?token=') [1];
       this.scannedToken = scannedToken;
       this.afterScanPage = true;
       localStorage.setItem('scannedUrl', scannedToken);
       this.scanCodeAction().then(r => console.log(r));
-      console.log('Barcode data', barcodeData);
+      if (barcodeData.cancelled) {
+        localStorage.setItem('scannedUrl', 'error');
+        this.router.navigate(['/tabs/activities/qr/']);
+      } else {
+        this.router.navigate(['/tabs/activities/qr/scanned']);
+      }
     }).catch(err => {
       console.log('Error', err);
       localStorage.setItem('scannedUrl', 'error');
-      return 'Error';
+      this.router.navigate(['/tabs/activities/qr']);
     });
   }
 

@@ -12,6 +12,7 @@ export class AuthService {
   private supabase: SupabaseClient;
   // @ts-ignore
   private currentUser: BehaviorSubject<User | boolean> = new BehaviorSubject(null);
+  user_id:string = '?';
 
   constructor(private router: Router) {
     this.supabase = createClient(
@@ -80,6 +81,8 @@ export class AuthService {
 
   getCurrentUserId(): string {
     if (this.currentUser.value) {
+      this.user_id = (this.currentUser.value as User).id;
+      localStorage.setItem('user_id', (this.currentUser.value as User).id);
       return (this.currentUser.value as User).id;
     } else {
       return '?';

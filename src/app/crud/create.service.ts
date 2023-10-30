@@ -32,6 +32,20 @@ export class CreateService {
     return true;
   }
 
+  async registerClass(class_name:string, class_code:string, teacher_email:string, user_id:string) {
+    const { data, error } = await this.supabase.from('classes')
+      .insert([{ class_name, class_code, teacher_email, 'user_id': user_id }])
+      .eq('user_id', user_id);
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    console.log('Server response:', data)
+    return true;
+  }
+
 
 }
 

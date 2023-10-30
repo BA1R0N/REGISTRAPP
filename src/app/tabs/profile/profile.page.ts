@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { ReadService } from "../../crud/read.service";
 
@@ -7,7 +7,7 @@ import { ReadService } from "../../crud/read.service";
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss']
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
   profileCompleted:boolean = true;
 
   constructor(
@@ -27,7 +27,12 @@ export class ProfilePage {
     await this.authService.signOut()
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // @ts-ignore
+    this.readService.isProfileCompleted(localStorage.getItem('user_id')).then((data) => {
+      this.profileCompleted = data;
+    });
+  }
 
 
 

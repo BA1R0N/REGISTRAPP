@@ -8,5 +8,50 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-header>
+        <ion-card-title>Editar perfil</ion-card-title>
+      </ion-card-header>
+
+      <form (ngSubmit)="confirm()" [formGroup]="fields">
+
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input
+            type="text"
+            inputmode="text"
+            formControlName="first_name"
+            placeholder="John"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Apellido</ion-label>
+          <ion-input
+            type="text"
+            inputmode="text"
+            formControlName="last_name"
+            placeholder="Doe"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Rol</ion-label>
+          <ion-select placeholder="Selecciona tu rol" formControlName="role">
+            <ion-select-option value="student">Estudiante</ion-select-option>
+            <ion-select-option value="teacher">Profesor</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <br />
+
+        <ion-button type="submit" expand="block" strong="true" [disabled]="fields.invalid">
+          Aceptar
+        </ion-button>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
