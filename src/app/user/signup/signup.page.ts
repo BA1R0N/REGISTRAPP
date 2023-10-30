@@ -35,6 +35,7 @@ export class SignupPage implements OnInit {
   ngOnInit() {
   }
 
+  // Funcion de creacion de cuentas de usuario
   async createAccount() {
     const loading = await this.loadingController.create();
     await loading.present();
@@ -52,6 +53,7 @@ export class SignupPage implements OnInit {
     });
   }
 
+  // alerta html
   async showAlert(title: string, msg: string) {
     const alert = await this.alertController.create({
       header: title,

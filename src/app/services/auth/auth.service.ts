@@ -50,11 +50,12 @@ export class AuthService {
     }
   }
 
-
+  // Registro de usuario
   signUp(credentials: { email: string, password: string }) {
     return this.supabase.auth.signUp(credentials)
   }
 
+  // Inicio de sesión
   signIn(credentials: { email: string, password: string }) {
     return this.supabase.auth.signInWithPassword(credentials)
   }
@@ -65,6 +66,7 @@ export class AuthService {
     return this.supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
   }
 
+  // Cierra la sesión
   async signOut() {
     await this.supabase.auth.signOut();
     this.clearCookiesAndLocalStorage();
@@ -75,10 +77,12 @@ export class AuthService {
     return this.supabase.auth.resetPasswordForEmail(email)
   }
 
+  // Retorna el usuario actual
   getCurrentUser(): Observable<User | boolean> {
     return this.currentUser.asObservable()
   }
 
+  // Retorna el id del usuario si es que este inicio sesión
   getCurrentUserId(): string {
     if (this.currentUser.value) {
       this.user_id = (this.currentUser.value as User).id;
@@ -113,6 +117,7 @@ export class AuthService {
       return user_id !== '?';
   }
 
+  // Limpia las cookies y el localStorage
   clearCookiesAndLocalStorage() {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {

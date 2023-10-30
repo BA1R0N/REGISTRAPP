@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  // Funcion que llama a la funcion de autenticacion "signIn" y autentica al usuario
   async login() {
     const loading = await this.loadingController.create();
     await loading.present();
@@ -52,6 +53,7 @@ export class LoginPage implements OnInit {
     )
   }
 
+  // Envia un email para iniciar sesion sin contraseña
   async getMagicLink() {
     const alert = await this.alertController.create({
       header: 'Iniciar sesion sin contraseña',
@@ -90,7 +92,7 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-
+  // Alerta html
   async showAlert(title: string, msg: string) {
     const alert = await this.alertController.create({
       header: title,
@@ -100,6 +102,7 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  // Envia un enlace para recuperar contraseña al email
   async forgotPassword() {
     const alert = await this.alertController.create({
       header: 'Recupera tu contraseña',
