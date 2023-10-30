@@ -10,7 +10,7 @@ export class DownloadPage implements OnInit {
   constructor() { }
 
   downloadApp() {
-    window.open('https://github.com/sbgallardo/registrapp/releases/download/v1.0.0/RegistrAPP-v.1.0.0-Android.apk', '_system');
+    window.open('https://github.com/sbgallardo/registrapp/releases/download/v1.1.0/RegistrAPP-v.1.1.0-Android.apk', '_system');
   }
 
   ngOnInit() {
