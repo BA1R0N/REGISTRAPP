@@ -12,30 +12,31 @@
   <ion-card>
     <div class="qr-code">
 
-      <a target="_blank" href="https://api.registrapp.sebas.lat/a?token=2991184991040220">
-        <img src="https://api.registrapp.sebas.lat/img/20940870.png?stream=True" alt="Codigo QR">
+      <a target="_blank" href="https://api.registrapp.sebas.lat/a?token={{class_id}}">
+        <img src="{{img_url}}" alt="Codigo QR">
       </a>
     </div>
     <ion-card-header>
       <ion-card-title class="card-title">|  Detalles del registro:</ion-card-title>
       <ion-list>
         <ion-item>
-          <p><strong>Clase:</strong> Math</p>
+          <p><strong>Clase:</strong> {{class}}</p>
         </ion-item>
         <ion-item>
-          <p><strong>Email:</strong> example@email.com</p>
+          <p><strong>Email:</strong> {{email}}</p>
         </ion-item>
         <ion-item>
-          <p><strong>ID: </strong> <a href="https://api.registrapp.sebas.lat/a?token=2991184991040220">2991184991040220</a></p>
+          <p><strong>ID: </strong> <a href="{{class_url}}">{{class_id}}</a></p>
         </ion-item>
         <ion-item>
-          <p><strong>Registros:</strong> 0</p>
+          <p><strong>Registros:</strong> {{getListLength()}}</p>
         </ion-item>
       </ion-list>
       <ion-button
         style="padding-left: 15px; padding-top: 10px"
         color="danger"
         fill="outline"
+        (click)="cancel()"
       >
         Cancelar
       </ion-button>
@@ -48,7 +49,11 @@
           <ion-card-title>Alumnos registrados</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-
+          <ion-list>
+            <div *ngFor="let student of dataList">
+              <ion-item>{{ student }}</ion-item>
+            </div>
+          </ion-list>
         </ion-card-content>
       </ion-card>
 

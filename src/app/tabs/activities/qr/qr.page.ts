@@ -23,11 +23,14 @@ export class QrPage implements OnInit {
   registeredClass: string = '';
   teacher: string = '';
   classes: any[] = [];
+  show_button:boolean = false;
+
 
   form_fields = this.fb.nonNullable.group({
     class: ['', Validators.required],
-  })
+  });
 
+  classname = this.form_fields.getRawValue().class;
 
   constructor(
     private fb: FormBuilder,
@@ -66,6 +69,8 @@ export class QrPage implements OnInit {
         });
       }, 2500);
     }
+
+    this.show_button = localStorage.getItem('show_button') == 'true';
   }
 
   ngOnDestroy() {
@@ -117,11 +122,22 @@ export class QrPage implements OnInit {
 
   async generateQR() {
 
-    localStorage.setItem('generatedDesktop', 'true');
+    //localStorage.setItem('generatedDesktop', 'true');
+    localStorage.setItem('class', this.form_fields.getRawValue().class);
+    const sbtn = localStorage.getItem('show_button');
+    localStorage.setItem('show_button', 'true');
+
+    if (sbtn == 'true') {
+      this.show_button = true;
+    } else {
+      this.show_button = false;
+    }
 
     let email = this.getCurrentUser();
+    let classname = this.form_fields.getRawValue().class;
+    console.log('classname:', classname);
 
-    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + this.form_fields.getRawValue().class,
+    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + classname,
       {
         method: 'GET',
       }
@@ -193,13 +209,16 @@ export class QrPage implements OnInit {
     this.barcodeScanner.scan().then(barcodeData => {
       let scannedToken:string = barcodeData.text.split('?token=') [1];
       this.scannedToken = scannedToken;
+      localStorage.setItem('token', scannedToken);
       this.afterScanPage = true;
-      localStorage.setItem('scannedUrl', scannedToken);
+
       this.scanCodeAction().then(r => console.log(r));
       if (barcodeData.cancelled) {
         localStorage.setItem('scannedUrl', 'error');
         this.router.navigate(['/tabs/activities/qr/']);
       } else {
+
+
         this.router.navigate(['/tabs/activities/qr/scanned']);
       }
     }).catch(err => {
@@ -211,6 +230,7 @@ export class QrPage implements OnInit {
 
   async scanCodeAction(){
     let post_url = 'https://api.registrapp.sebas.lat/a?token=' + this.scannedToken +'&email='+this.qrInfo.email;
+    localStorage.setItem('scannedUrl', post_url);
 
     let response = await fetch(post_url, {
       method: 'POST',
@@ -222,6 +242,8 @@ export class QrPage implements OnInit {
     let json = await response.json();
     this.registeredClass = json.classname;
     this.teacher = json.teacher;
+    localStorage.setItem('class', this.registeredClass);
+    localStorage.setItem('teacher', this.teacher);
     console.log(json);
   }
 
@@ -238,6 +260,19 @@ export class QrPage implements OnInit {
       }
     })
 
+  }
+
+  showButton():boolean {
+    const state = localStorage.getItem('show_button');
+    console.log('state:', state)
+
+    if (localStorage.getItem('show_button') == 'true') {
+      return true;
+    } else if (localStorage.getItem('show_button') == 'false') {
+      return false;
+    } else {
+      return false;
+    }
   }
 
 }
