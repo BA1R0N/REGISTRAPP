@@ -28,19 +28,25 @@
             </ion-card-header>
             <ion-card-content>
 
-              <form (ngSubmit)="generateQR()">
+              <form (ngSubmit)="generateQR()" [formGroup]="form_fields">
                 <ion-grid>
                   <ion-row>
                     <ion-col>
                       <ion-item>
-                        <ion-label position="floating">Clase:</ion-label>
-                        <ion-input  type="text" placeholder="Matematicas" [(ngModel)]="qrInfo.classname" [ngModelOptions]="{standalone: true}"></ion-input>
+
+                        <ion-label position="stacked">Seleccionar clase</ion-label>
+                        <ion-select placeholder="Selecciona tu rol" formControlName="class">
+                          <div *ngFor="let c of classes">
+                            <ion-select-option value="{{c.class_name}}">{{c.class_name}}</ion-select-option>
+                          </div>
+                        </ion-select>
+
                       </ion-item>
                     </ion-col>
                   </ion-row>
                   <ion-row>
                     <ion-col>
-                      <ion-button (click)="generateQR()" >Generar</ion-button>
+                      <ion-button (click)="generateQR()" [disabled]="form_fields.invalid">Generar</ion-button>
                       <ion-button routerLink="generated/" >abrir generated</ion-button>
                       <p>Registrado como: {{getCurrentUser()}}</p>
                     </ion-col>
@@ -67,6 +73,10 @@
             <ion-card-content>
               <div *ngIf="isApp()">
                 <ion-button  (click)="scanCode()">Abrir camara</ion-button>
+                <ion-button routerLink="scanned/">
+                  ver pagina generada
+
+                </ion-button>
               </div>
               <div *ngIf="!isApp()">
                 <ion-button routerLink="/download">
@@ -82,6 +92,17 @@
 
       </div>
       <!-- Fin - Pagina generada pc -->
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Pagina del qr generado -->
       <div *ngIf="!generatedPageDesktop()">
@@ -132,6 +153,7 @@
       <!-- Fin - Pagina generada movil -->
 
       <div *ngIf="generatedPageMobile()">
+
         <div class="mobile-div">
           <h1>Se registro tu asistencia</h1>
           <ion-grid>

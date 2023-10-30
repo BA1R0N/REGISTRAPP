@@ -4,6 +4,8 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {Platform} from "@ionic/angular";
 import {navigate} from "ionicons/icons";
 import {Router} from "@angular/router";
+import {ReadService} from "../../../crud/read.service";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-qr',
@@ -20,18 +22,25 @@ export class QrPage implements OnInit {
   afterScanPage: boolean = false;
   registeredClass: string = '';
   teacher: string = '';
+  classes: any[] = [];
+
+  form_fields = this.fb.nonNullable.group({
+    class: ['', Validators.required],
+  })
 
 
   constructor(
+    private fb: FormBuilder,
     private barcodeScanner: BarcodeScanner,
     private authService: AuthService,
     private platform: Platform,
-    private router: Router
+    private router: Router,
+    private readService: ReadService
   ) {}
 
 
   qrInfo = {
-    classname : 'matematicas',
+    classname : this.form_fields.getRawValue().class ?? '',
     token: localStorage.getItem('token') ?? 0,
     email: this.getCurrentUser(),
     image: localStorage.getItem('image') ?? '',
@@ -39,6 +48,7 @@ export class QrPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getClassList();
     this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
         // @ts-ignore
@@ -111,7 +121,7 @@ export class QrPage implements OnInit {
 
     let email = this.getCurrentUser();
 
-    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + this.qrInfo.classname,
+    let result = await fetch('https://api.registrapp.sebas.lat/generate?email='+ email + '&classname=' + this.form_fields.getRawValue().class,
       {
         method: 'GET',
       }
@@ -219,5 +229,15 @@ export class QrPage implements OnInit {
     return this.platform.is('capacitor');
   }
 
+  getClassList() {
+    this.readService.getClasses(this.authService.getCurrentUserId()).then((data) => {
+      if (data) {
+        this.classes = data;
+      } else {
+        this.classes = [];
+      }
+    })
+
+  }
 
 }

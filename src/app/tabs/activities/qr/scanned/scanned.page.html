@@ -26,15 +26,15 @@
       <ion-list>
         <ion-item>
           <ion-icon aria-hidden="true" name="briefcase" slot="start"></ion-icon>
-          <ion-label><strong>Clase:</strong> todo</ion-label>
+          <ion-label><strong>Clase:</strong> {{class}}</ion-label>
         </ion-item>
         <ion-item>
           <ion-icon aria-hidden="true" name="at" slot="start"></ion-icon>
-          <ion-label><strong>Profesor:</strong> todo</ion-label>
+          <ion-label><strong>Profesor:</strong> {{teacher}}</ion-label>
         </ion-item>
         <ion-item>
           <ion-icon aria-hidden="true" name="reader" slot="start"></ion-icon>
-          <ion-label><strong>ID: </strong> <a href="https://api.registrapp.sebas.lat/a?token=7036574371382710">5164329567</a></ion-label>
+          <ion-label><strong>ID: </strong> <a href="{{class_url}}">{{class_id}}</a></ion-label>
         </ion-item>
       </ion-list>
 
