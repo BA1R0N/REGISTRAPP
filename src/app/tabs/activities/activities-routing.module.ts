@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'forms',
     loadChildren: () => import('./forms/forms.module').then( m => m.FormsPageModule),
     canActivate: [authGuard]
+  },
+  {
+    path: 'wiki',
+    loadChildren: () => import('./wiki/wiki.module').then( m => m.WikiPageModule)
   }
 ];
 

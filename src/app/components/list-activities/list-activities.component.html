@@ -18,20 +18,7 @@
         </ion-button>
       </ion-item>
 
-      <ion-item>
-        <ion-icon aria-hidden="true" name="document-text-outline" slot="start"></ion-icon>
-        <ion-label>Formularios</ion-label>
-        <ion-button
-          type="button"
-          expand="block"
-          color="primary"
-          fill="outline"
-          routerLink="/tabs/activities/forms"
-          disabled="{{!isLogged()}}"
-        >
-          Abrir
-        </ion-button>
-      </ion-item>
+
 
       <ion-item>
         <ion-icon aria-hidden="true" name="briefcase-outline" slot="start"></ion-icon>
@@ -42,6 +29,21 @@
           color="primary"
           fill="outline"
           routerLink="/tabs/activities/classes"
+          disabled="{{!isLogged()}}"
+        >
+          Abrir
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon aria-hidden="true" name="document-text-outline" slot="start"></ion-icon>
+        <ion-label>Buscar articulos</ion-label>
+        <ion-button
+          type="button"
+          expand="block"
+          color="primary"
+          fill="outline"
+          routerLink="/tabs/activities/wiki"
           disabled="{{!isLogged()}}"
         >
           Abrir
