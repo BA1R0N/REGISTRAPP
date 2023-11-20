@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DownloadPage implements OnInit {
   url = 'https://github.com/sbgallardo/registrapp/releases/download/';
-  version = 'v1.1.0';
-  name = 'RegistrAPP-v.1.1.0-Android.apk';
+  version = 'v1.2.0';
+  name = 'RegistrAPP-v.1.2.0-Android.apk';
 
   constructor() { }
   // Redirecciona al enlace de descarga al ser llamada
