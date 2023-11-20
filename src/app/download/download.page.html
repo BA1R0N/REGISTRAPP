@@ -1,7 +1,13 @@
 <ion-content [fullscreen]="true">
   <div>
     <h1 style="color: #FFFFFF">Descarga la aplicación</h1>
-    <ion-button (click)="downloadApp()">Descargar para android<ion-icon slot="end" name="logo-android"></ion-icon></ion-button>
+    <ion-button (click)="downloadApp()">Descargar para android {{version}} <ion-icon slot="end" name="logo-android"></ion-icon></ion-button>
+    <h5 style="color: #FFFFFF; font-size: 1.5rem;">Verifica la firma</h5>
+    <div class="code">
+      <code>
+        jarsigner -verify -verbose -certs {{name}}
+      </code>
+    </div>
     <br />
     <a href="/">Volver al inicio</a>
   </div>

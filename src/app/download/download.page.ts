@@ -6,12 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./download.page.scss'],
 })
 export class DownloadPage implements OnInit {
+  url = 'https://github.com/sbgallardo/registrapp/releases/download/';
+  version = 'v1.1.0';
+  name = 'RegistrAPP-v.1.1.0-Android.apk';
 
   constructor() { }
-
   // Redirecciona al enlace de descarga al ser llamada
+
   downloadApp() {
-    window.open('https://github.com/sbgallardo/registrapp/releases/download/v1.1.0/RegistrAPP-v.1.1.0-Android.apk', '_system');
+    const url = this.url + this.version + '/' + this.name;
+    window.open(url, '_system');
   }
 
   ngOnInit() {
